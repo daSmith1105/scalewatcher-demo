@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "sLpn": "SR23AB22",
+        "sEventType": "entry",
+        "dTimestamp": "2020-04-02 06:00:00",
+        "sLocation": "scale 1",
+        "sData": "image path"
+    },
+    {
+        "id": 2,
+        "sLpn": "SR23AB22",
+        "sEventType": "ticket",
+        "dTimestamp": "2020-04-02 06:15:00",
+        "sLocation": "scale 1",
+        "sData": "ticket path"
+    },
+    {
+        "id": 3,
+        "sLpn": "SR23AB22",
+        "sEventType": "exit",
+        "dTimestamp": "2020-04-02 06:17:00",
+        "sLocation": "scale 1",
+        "sData": "image path"
+    }
+]
