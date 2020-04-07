@@ -7,13 +7,13 @@ import WarningIcon from '@material-ui/icons/Warning'; // alert
 export const eventTypeToIcon = (eventType) => {
     switch (eventType) {
         case 'TruckEntering':
-            return <AdjustIcon style={{ fontSize: 10, color: 'green' }} />
+            return <AdjustIcon style={{ fontSize: 12, color: 'green' }} />
         case 'TruckOn':
-            return <WarningIcon style={{ fontSize: 10, color: 'orange' }} />
+            return <WarningIcon style={{ fontSize: 12, color: 'orange' }} />
         case 'TicketReceived':
-            return <AssignmentTurnedInIcon style={{ fontSize: 10, color: 'black' }} />
+            return <AssignmentTurnedInIcon style={{ fontSize: 12, color: 'black' }} />
         case 'TruckLeaving':
-            return <Brightness1Icon style={{ fontSize: 10, color: 'red' }} />
+            return <Brightness1Icon style={{ fontSize: 12, color: 'red' }} />
         default:
             return eventType;
     };

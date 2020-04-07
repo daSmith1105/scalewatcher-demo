@@ -13,10 +13,43 @@
   display: none;
 }
 
-p {
-  font-size: 12px;
-  font-weight: 'bold';
+
+.sticky {
+  position: sticky !important;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background-color: white;
 }
-span {
-  font-size: 12px
+
+.rt-tbody {
+  overflow: visible !important;
 }
+
+.event-icon:hover {
+  cursor: pointer;
+  transform: scale(1.6);
+}
+
+.speech-bubble {
+	position: relative;
+	background: white;
+  border-radius: .4em;
+  border: 2px solid grey;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 22px solid transparent;
+	border-top-color: grey;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -11px;
+	margin-bottom: -22px;
+}
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import { ButtonGroup, Button } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
@@ -52,7 +52,3 @@ const ReportHeader= props => {
 }
 
 export default ReportHeader;
-
-const styles = {
-   
-}

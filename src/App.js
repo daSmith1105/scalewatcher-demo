@@ -1,7 +1,7 @@
 import React from 'react';
 import Main from './Main';
 import './App.css';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid } from 'react-flexbox-grid';
 
 const App = (props) => {
   return (
