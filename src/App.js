@@ -5,11 +5,20 @@ import './App.css';
 import { Grid } from 'react-flexbox-grid';
 
 class App extends React.Component {
+
+  state = {
+    activeView: 'transaction'
+  }
+
+  setActiveView = (view) => {
+    this.setState({ activeView: view });
+  };
+
   render() {
     return (
       <Grid fluid >
-        <Header />
-          <Main />
+        <Header activeView={ this.state.activeView } setActiveView={ this.setActiveView }/>
+          <Main activeView={ this.state.activeView } />
       </Grid>
     );
   }

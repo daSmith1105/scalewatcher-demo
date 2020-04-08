@@ -6,7 +6,7 @@ import WarningIcon from '@material-ui/icons/Warning'; // alert
 import StopIcon from '@material-ui/icons/Stop'; // ticket
 import GradeIcon from '@material-ui/icons/Grade'; // valve
 
-const ReportKeyContainer = props => {
+const TransactionBoardKeyContainer = props => {
   return (
         <Row middle="xs" around="xs" style={{ padding: 0, /*border: '2px solid grey', borderRadius: 10*/ }} >
             <Row middle="xs" >
@@ -36,4 +36,4 @@ const ReportKeyContainer = props => {
   );
 }
 
-export default ReportKeyContainer;
+export default TransactionBoardKeyContainer;

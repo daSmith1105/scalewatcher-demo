@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import ReportKeyContainer from './ReportKeyContainer';
+import TransactionBoardKeyContainer from './TransactionBoardKeyContainer';
 
-const ReportSubHeader= props => {
+const TransactionBoardSubHeader= props => {
   return (
     <Row middle="xs" style={{ marginTop: 20, marginBottom: 10 }}>
       <Col xs={12} md={6} >
@@ -11,10 +11,10 @@ const ReportSubHeader= props => {
         </Row>
       </Col>
       <Col xs={12} md={6}>
-          <ReportKeyContainer />
+          <TransactionBoardKeyContainer />
       </Col>
     </Row>
   );
 }
 
-export default ReportSubHeader;
+export default TransactionBoardSubHeader;

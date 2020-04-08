@@ -13,6 +13,17 @@
   display: none;
 }
 
+.link {
+  transition: .5s;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+.transition {
+  transition: .5s
+}
 
 .stickyL {
   position: sticky !important;
@@ -29,9 +40,9 @@
   background-color: white;
 }
 
-.rt-tbody {
+/* .rt-tbody {
   overflow: visible !important;
-}
+} */
 
 .event-icon:hover {
   cursor: pointer;

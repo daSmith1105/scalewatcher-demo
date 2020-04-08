@@ -1,5 +1,6 @@
 import React from 'react';
-import ReportContainer from './components/ReportContainer';
+import TransactionBoardContainer from './components/transaction_board/TransactionBoardContainer';
+import TableViewContainer from './components/table_view/TableViewContainer';
 import { Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
 
@@ -11,6 +12,7 @@ class Main extends React.Component {
     currentTooltipEvent: {}
   }
 
+  // determine where the mouse is so we can render the tooltip correctly on transaction board
   _onMouseMove = e => {
     this.setState({ x: e.screenX, y: e.screenY });
   }
@@ -68,7 +70,7 @@ parseTooltipDataDisplay = event => {
       <Col xs={12} onMouseMove={ this._onMouseMove }>
 
         { this.state.showTooltip ? 
-          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 100, position: 'absolute', top: this.state.y - 230,  left: this.state.x + (this.state.x / 20), height: 'auto', width: 'auto' }} >
+          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 100, position: 'absolute', top: this.state.y - 200,  left: this.state.x - (this.state.x / 16), height: 'auto', width: 'auto' }} >
             <div style={{ width: 'auto', 
                           backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type), 
                           borderTopLeftRadius: 5,
@@ -99,15 +101,36 @@ parseTooltipDataDisplay = event => {
           null
         }
   
-        <Row center="xs" style={{ marginTop: 20}} >
-          <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-            <ReportContainer toggleTooltip={ this.toggleTooltip } />
-          </Col>
-        </Row>
-  
-      </Col>
-    );
-  }
+        { this.props.activeView === 'transaction' ? 
+          <Row center="xs" className="transition" style={{ marginTop: 20}} >
+            <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+              <TransactionBoardContainer toggleTooltip={ this.toggleTooltip } />
+            </Col>
+          </Row> :
+          null
+        }
+
+        { this.props.activeView === 'table' ? 
+                  <Row center="xs" className="transition" style={{ marginTop: 20}} >
+                    <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                    <TableViewContainer />
+                    </Col>
+                  </Row> :
+                  null
+                }
+
+        { this.props.activeView === 'log' ? 
+                  <Row center="xs" className="transition" style={{ marginTop: 20}} >
+                    <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                      <h1>Log / Reports</h1>
+                    </Col>
+                  </Row> :
+                  null
+                }
+          
+              </Col>
+            );
+          }
 }
 
 export default Main;

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css'
-import { transactions, events } from './mockData.js';
+import { transactions, events } from '../mockData.js';
 import moment from 'moment';
-import '../App.css'
+import '../../App.css'
 import Brightness1Icon from '@material-ui/icons/Brightness1'; // lpr
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'; // scale
 import WarningIcon from '@material-ui/icons/Warning'; // alert
@@ -43,19 +43,10 @@ function roundDown5(x)
 }
 
 
-class TableTest extends React.Component {
+class TransactionBoardTable extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            // get the mouse coordinates so we can display event tooltip near mouse
-            x: 0,
-            y: 0,
-            showTooltip: false,
-            currentTooltipEvent: {},
-            currentModalEvent: {}, 
-            showEventModal: true 
-        }
         this.columns = [{
             Header: <span style={{ fontSize: 12, marginRight: 40, marginTop: 5, color: 'grey'}}>Lpn / Id</span>,
             accessor: 'lpn',
@@ -1865,7 +1856,7 @@ class TableTest extends React.Component {
                                                                                         key={ event.eId}
                                                                                         onClick={ () => this.showEventModal(event) }
                                                                                         onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
-                                                                                        nMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
+                                                                                        onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'ValveOpened' || event.type ==='ValveClosed' ) {
                                                     // Valve events                                    
                                                         returnValue = <GradeIcon className="event-icon"
@@ -1950,4 +1941,4 @@ class TableTest extends React.Component {
     }
 }
 
-export default TableTest;
+export default TransactionBoardTable;

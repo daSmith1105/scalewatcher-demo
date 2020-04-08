@@ -7,7 +7,7 @@ import moment from 'moment';
 
 // activate live mode call
 
-const ReportHeader= props => {
+const TransactionBoardHeader= props => {
   return (
     <Row center="xs" around="xs" >
 
@@ -56,4 +56,4 @@ const ReportHeader= props => {
   );
 }
 
-export default ReportHeader;
+export default TransactionBoardHeader;
