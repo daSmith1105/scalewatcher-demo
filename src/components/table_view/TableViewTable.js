@@ -47,23 +47,27 @@ class TableViewTable extends React.Component {
             Header: 'id',
             accessor: 'tId',
             show: true,
+            width: 40
         }, {
             Header: 'lpn',
             accessor:'lpn',
             show: true,
+            width: 140
         }, {
             Header: 'start',
             accessor: 'start',
             show: true,
+            width: 200
         }, {
             Header: 'end',
             accessor: 'end',
             show: true,
+            width: 200
         }, {
             Header: 'events',
             accessor: 'events',
             show: true,
-            Cell: row => <span>{JSON.stringify(row.original.events)}</span> 
+            Cell: row => <span style={{ whiteSpace: 'nowrap'}}>{JSON.stringify(row.original.events)}</span> 
           }];
     }
 
@@ -72,15 +76,17 @@ class TableViewTable extends React.Component {
     render() {
 
         return(
-            <div>
+            <div style={{ width: '100%', overflow: 'scroll' }}>
 
                 <ReactTable
+                    style={{ width: '200%'}}
                     className='-striped -highlight'
                     data={data}
                     columns={this.columns}
-                    sortable={false}
-                    showPagination={false}
-                    defaultPageSize={16}
+                    sortable={true}
+                    filterable={true}
+                    showPagination={true}
+                    defaultPageSize={10}
                    
                 />
             </div>
