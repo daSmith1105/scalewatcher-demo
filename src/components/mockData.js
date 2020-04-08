@@ -1,13 +1,13 @@
 export const transactions = [
-    { id: 1, sLpn: '87GG523', dStartTimestamp: '2020-04-02 06:04:15', dEndTimestamp: '2020-04-02 06:14:15' },
+    { id: 1, sLpn: '87GG523', dStartTimestamp: '2020-04-02 06:02:15', dEndTimestamp: '2020-04-02 06:14:15' },
 
-    { id: 2, sLpn: '00D211W', dStartTimestamp: '2020-04-02 05:14:15', dEndTimestamp: '2020-04-02 05:30:15' },
+    { id: 2, sLpn: '00D211W', dStartTimestamp: '2020-04-29 05:14:15', dEndTimestamp: '2020-04-02 05:30:15' },
 
-    { id: 3, sLpn: '5XFF723', dStartTimestamp: '2020-04-29 04:40:40', dEndTimestamp: '2020-04-02 04:05:15' },
+    { id: 3, sLpn: '5XFF723', dStartTimestamp: '2020-04-02 03:38:15', dEndTimestamp: '2020-04-02 04:05:15' },
 
-    { id: 4, sLpn: 'LL01WS1', dStartTimestamp: '2020-04-02 03:14:15', dEndTimestamp: '2020-04-02 04:05:15' },
+    { id: 4, sLpn: 'LL01WS1', dStartTimestamp: '2020-04-02 03:13:15', dEndTimestamp: '2020-04-02 04:05:15' },
 
-    { id: 5, sLpn: 'ABC4351', dStartTimestamp: '2020-04-02 02:14:15', dEndTimestamp: '2020-04-02 02:30:15' },
+    { id: 5, sLpn: 'ABC4351', dStartTimestamp: '2020-04-02 02:12:15', dEndTimestamp: '2020-04-02 02:30:15' },
 
     { id: 6, sLpn: 'R30P554', dStartTimestamp: '2020-04-02 16:14:15', dEndTimestamp: '2020-04-02 16:30:15' },
 
