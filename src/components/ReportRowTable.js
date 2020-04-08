@@ -36,11 +36,11 @@ const data =  transactions.map( t => (
     }
 ))
 
-    // round number down to nearest increment of 5 for display correctly on timeline/in table
-    function roundDown5(x)
-    {
-        return Math.floor(x/5)*5;
-    }
+// round number down to nearest increment of 5 for display correctly on timeline/in table
+function roundDown5(x)
+{
+    return Math.floor(x/5)*5;
+}
 
 
 class TableTest extends React.Component {
@@ -57,7 +57,7 @@ class TableTest extends React.Component {
             showEventModal: true 
         }
         this.columns = [{
-            Header: 'Lpn',
+            Header: 'Lpn / Id',
             accessor: 'lpn',
             width: 110,
             className: "stickyL",
@@ -81,6 +81,13 @@ class TableTest extends React.Component {
                     </span>
                 </span>
             )
+        }, {
+            // buffer column
+            Header: <span></span>,
+            accessor: 'events',
+            width: 16,
+            show: true,
+            Cell: row => <span></span>
         }, {
             id: '12am',
             Header: <span style={{ fontSize: 10, fontWeight: 'bold', color: 'black' }}>12am</span>,
@@ -240,7 +247,7 @@ class TableTest extends React.Component {
         }, {
             Header: <span style={{ fontSize: 10, fontWeight: 'bold', color: 'black' }}>2am</span>,
             accessor: 'id',
-            width: 36,
+            width: 38,
             Cell: row => this.parseRowEvents(row.original.events, '02', '00', '04')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey'}}>:05</span>,
@@ -1774,6 +1781,13 @@ class TableTest extends React.Component {
             show: false,
             Cell: row => this.parseRowEvents(row.original.events, '23', '55', '59')
         }, {
+            // buffer column
+            Header: <span></span>,
+            accessor: 'events',
+            width: 16,
+            show: true,
+            Cell: row => <span></span>
+        }, {
             id: 'time-in-facility',
             Header: <span style={{ fontSize: 8, color: 'grey' }}>Time In Facility</span>,
             accessor: t => t.end - t.start,
@@ -1821,47 +1835,47 @@ class TableTest extends React.Component {
                                                                                     style={{ height: '100%', fontSize: 12, color: 'green' }}
                                                                                     key={ event.eId}
                                                                                     onClick={ () => this.showEventModal(event) }
-                                                                                    onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                                                    onMouseLeave={ () => this.setState({ showTooltip: false })} />
+                                                                                    onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                                                    onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'LprRead' || event.type === 'TruckEntering' || event.type === 'TruckOn' || event.type === 'TruckLeaving' ) {
                                                       //  Scale events   
                                                         returnValue = <PlayArrowIcon  className="event-icon" 
                                                                                     style={{ height: '100%', fontSize: 16, color: 'red' }}
                                                                                     key={ event.eId}
                                                                                     onClick={ () => this.showEventModal(event) }
-                                                                                    onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                                                    onMouseLeave={ () => this.setState({ showTooltip: false })} />
+                                                                                    onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                                                    onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'TicketReceived' ) {
                                                     //Ticket events
                                                         returnValue = <StopIcon  className="event-icon"
                                                                                         style={{ height: '100%', fontSize: 16, color: 'black' }}
                                                                                         key={ event.eId}
                                                                                         onClick={ () => this.showEventModal(event) }
-                                                                                        onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                                                        onMouseLeave={ () => this.setState({ showTooltip: false })} />
+                                                                                        onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                                                        nMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'ValveOpened' || event.type ==='ValveClosed' ) {
                                                     // Valve events                                    
                                                         returnValue = <GradeIcon className="event-icon"
                                                                             style={{ height: '100%', fontSize: 12, color: 'blue' }}
                                                                             key={ event.eId}
                                                                             onClick={ () => this.showEventModal(event) }
-                                                                            onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                                            onMouseLeave={ () => this.setState({ showTooltip: false })} />
-                                                     } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'Overweight' || event.type === 'TareWeightContamination' ) {
+                                                                            onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                                            onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
+                                                     } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'OverWeight' || event.type === 'TareWeightContamination' ) {
                                                     // Alert events
                                                         returnValue = <WarningIcon className="event-icon"
-                                                                                style={{ height: '100%', fontSize: 12, color: 'orange' }}
-                                                                                key={ event.eId}
-                                                                                onClick={ () => this.showEventModal(event) }
-                                                                                onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                                                onMouseLeave={ () => this.setState({ showTooltip: false })} />
+                                                                                    style={{ height: '100%', fontSize: 12, color: 'orange' }}
+                                                                                    key={ event.eId}
+                                                                                    onClick={ () => this.showEventModal(event) }
+                                                                                    onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                                                    onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else {
                                                     // Unknown
                                                         returnValue = <HelpIcon className="event-icon"
                                                             style={{ height: '100%', fontSize: 12, color: 'purple' }}
                                                             key={ event.eId}
-                                                            onMouseEnter={ () => this.setState({ currentTooltipEvent: event, showTooltip: true }) }
-                                                            onMouseLeave={ () => this.setState({ showTooltip: false })} />
+                                                            onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
+                                                            onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      }
 
                                                     return returnValue;
@@ -1872,88 +1886,10 @@ class TableTest extends React.Component {
             )
     }
 
-    clearTooltip = () => {
-        this.setState({ currentTooltipEvent: {}, showTooltip: false })
-    }
-
-    setCurrentcurrentTooltipEventEvent = (event) => {
-        this.setState({ currentTooltipEvent: event, showTooltip: true })
-    }
-
-    parseTooltipHeaderColor = (eventtype) => {  
-        let color;
-        if ( eventtype === 'LprRead' ) {
-            color = 'green'
-        } else if ( eventtype === 'TruckEntering' || eventtype === 'TruckOn' || eventtype === 'TruckLeaving' ) {
-            color = 'red'
-        } else if ( eventtype === 'TicketReceived' ) {
-            color = 'black'
-        } else if ( eventtype === 'ValveOpened' || eventtype ==='ValveClosed' ) {
-            color = 'blue'
-        } else if ( eventtype === 'NoTicket' || eventtype === 'ValveAlert' || eventtype === 'Overweight' || eventtype === 'TareWeightContamination' ) {
-            color = 'goldenrod'
-        } else {
-            color = 'grey'
-        }
-        return color;
-    };
-
-    parseTooltipDataDisplay = event => {
-        let formatted;
-
-        if ( event.type === 'LprRead' ) {
-            formatted = `LPN: ${event.data}`; 
-        } else if ( event.type === 'TruckEntering' || event.type === 'TruckOn' || event.type === 'TruckLeaving' ) {
-            formatted = `${event.data} lb`
-        } else if ( event.type === 'TicketReceived' ) {
-            const splitData = event.data.split(':')[1];
-            formatted = `Ticket: #${splitData}`
-        } else if ( event.type === 'ValveOpened' || event.type ==='ValveClosed' ) {
-            formatted = `${event.data}`
-        } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'Overweight' || event.type === 'TareWeightContamination' ) {
-            formatted = `${event.data}`
-        } else {
-            formatted = ''
-        }
-        return formatted;
-    };
-
     render() {
 
         return(
             <div style={{ width: '100%' }} >
-
-                { this.state.showTooltip ? 
-                    <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 20, position: 'absolute', top: 100, left: '40%', height: 'auto', width: 'auto' }} >
-                        <div style={{ width: 'auto', 
-                                      backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type), 
-                                      borderTopLeftRadius: 5,
-                                      borderTopRightRadius: 5,
-                                      margin: 0,
-                                      paddingTop: 5,
-                                      paddingBottom: 5,
-                                      paddingRight: 10, 
-                                      paddingLeft: 10,  
-                                      borderBottom: '1px solid grey',
-                                      textAlign: 'left'}}>
-                            <p style={{ fontWeight: 'bold', fontSize: 12, color: 'white', margin: 0, padding: 0 }}>
-                                {this.state.currentTooltipEvent.type.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")} - {this.state.currentTooltipEvent.location}
-                            </p>
-                        </div>
-                        <div style={{ padding: 5 }}>
-                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>transaction id: {this.state.currentTooltipEvent.tId}</p> 
-                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>date: {moment(this.state.currentTooltipEvent.timestamp).format('MM/DD/YYYY')}</p> 
-                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>time: {moment(this.state.currentTooltipEvent.timestamp).format('hh:mm:ss a')}</p> 
-                        </div>
-                            { this.state.currentTooltipEvent.data !== '' ?
-                                <div style={{ width: 'auto', padding: 5, borderTop: '1px solid grey', backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type) }}>
-                                    <p style={{ color: 'white', fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>{this.parseTooltipDataDisplay(this.state.currentTooltipEvent)}</p> 
-                                </div>:
-                                    null
-                                }
-                    </div> :
-                    null
-                }
 
                 <ReactTable
                     style={{ border: 'none' }}
@@ -1961,10 +1897,11 @@ class TableTest extends React.Component {
                     data={data}
                     columns={this.columns}
                     showPagination={false}
-                    defaultPageSize={11}
+                    defaultPageSize={data.length + 1}
                     getTheadProps={ () => {
                         return {
                             style: {
+                                fontSize: 12,
                                 fontWeight: 'bold',
                                 border: 'none'
                             }

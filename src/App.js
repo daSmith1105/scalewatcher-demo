@@ -3,12 +3,14 @@ import Main from './Main';
 import './App.css';
 import { Grid } from 'react-flexbox-grid';
 
-const App = (props) => {
-  return (
-    <Grid fluid>
-        <Main />
-    </Grid>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Grid fluid style={{ height: '100%', width: '100%' }} >
+          <Main />
+      </Grid>
+    );
+  }
 }
 
 export default App;

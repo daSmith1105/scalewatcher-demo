@@ -9,7 +9,7 @@ const ReportContainer = props => {
     <Col xs={12} s={12} md={12} lg={12} style={{ border: '2px solid grey', padding: 20, borderRadius: 10 }} >
         <ReportHeader />
         <ReportSubHeader />
-        <ReportRowTable />
+        <ReportRowTable toggleTooltip={ props.toggleTooltip } />
     </Col>
   );
 }
