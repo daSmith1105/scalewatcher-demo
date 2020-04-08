@@ -59,9 +59,28 @@ class TableTest extends React.Component {
         this.columns = [{
             Header: 'Lpn',
             accessor: 'lpn',
-            width: 100,
-            className: "sticky",
-            headerClassName: "sticky"
+            width: 110,
+            className: "stickyL",
+            headerClassName: "stickyL",
+            Cell: row => (
+                <span style={{ verticalAlign: 'middle' }}>
+                    { row.original.lpn !== '' ?
+                        <span style={{ float: 'left' }}>{row.original.lpn}</span> :
+                        <span style={{ float: 'left' }}>-- Lpn --</span>
+                    }
+                    <span style={{  float: 'right', 
+                                    paddingRight: 3, 
+                                    paddingLeft: 3, 
+                                    verticalAlign: 'middle',
+                                    border: '1px solid lightgrey', 
+                                    borderRadius: '50%', 
+                                    marginLeft: 10, 
+                                    fontSize: 8, 
+                                    color: 'grey' }}>
+                        {transactions.filter( t => t.sLpn === row.original.lpn).length}
+                    </span>
+                </span>
+            )
         }, {
             id: '12am',
             Header: <span style={{ fontSize: 10, fontWeight: 'bold', color: 'black' }}>12am</span>,
@@ -588,6 +607,7 @@ class TableTest extends React.Component {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:45</span>,
             accessor: 'events',
             width: 36,
+            show: false,
             Cell: row => this.parseRowEvents(row.original.events, '07', '45', '49')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:50</span>,
@@ -689,6 +709,7 @@ class TableTest extends React.Component {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:10</span>,
             accessor: 'events',
             width: 36,
+            show: false,
             Cell: row => this.parseRowEvents(row.original.events, '09', '10', '14')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:15</span>,
@@ -718,6 +739,7 @@ class TableTest extends React.Component {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:35</span>,
             accessor: 'events',
             width: 36,
+            show: false,
             Cell: row => this.parseRowEvents(row.original.events, '09', '35', '39')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:40</span>,
@@ -1751,6 +1773,24 @@ class TableTest extends React.Component {
             width: 36,
             show: false,
             Cell: row => this.parseRowEvents(row.original.events, '23', '55', '59')
+        }, {
+            id: 'time-in-facility',
+            Header: <span style={{ fontSize: 8, color: 'grey' }}>Time In Facility</span>,
+            accessor: t => t.end - t.start,
+            width: 78,
+            show: true,
+            className: "stickyR",
+            headerClassName: "stickyR",
+            // this will need to colllect all transactions based on sLpn or some other data point and find start and end points
+            // TODO: what if there is an start, but not complete - 
+            // do we go through the transaction and do the calculation or just have a previous total and state 'pending' or 'onsite'
+            Cell: row => (
+                row.original.complete ?
+                <span style={{ verticalAlign: 'middle', fontSize: 10, fontWeight: 'bold', color: 'grey' }}>
+                    { moment(row.original.end).diff(moment(row.original.start), 'minutes' ) } min
+                </span> :
+                <span></span>
+            )
           
           }];
     }
@@ -1840,32 +1880,93 @@ class TableTest extends React.Component {
         this.setState({ currentTooltipEvent: event, showTooltip: true })
     }
 
+    parseTooltipHeaderColor = (eventtype) => {  
+        let color;
+        if ( eventtype === 'LprRead' ) {
+            color = 'green'
+        } else if ( eventtype === 'TruckEntering' || eventtype === 'TruckOn' || eventtype === 'TruckLeaving' ) {
+            color = 'red'
+        } else if ( eventtype === 'TicketReceived' ) {
+            color = 'black'
+        } else if ( eventtype === 'ValveOpened' || eventtype ==='ValveClosed' ) {
+            color = 'blue'
+        } else if ( eventtype === 'NoTicket' || eventtype === 'ValveAlert' || eventtype === 'Overweight' || eventtype === 'TareWeightContamination' ) {
+            color = 'goldenrod'
+        } else {
+            color = 'grey'
+        }
+        return color;
+    };
+
+    parseTooltipDataDisplay = event => {
+        let formatted;
+
+        if ( event.type === 'LprRead' ) {
+            formatted = `LPN: ${event.data}`; 
+        } else if ( event.type === 'TruckEntering' || event.type === 'TruckOn' || event.type === 'TruckLeaving' ) {
+            formatted = `${event.data} lb`
+        } else if ( event.type === 'TicketReceived' ) {
+            const splitData = event.data.split(':')[1];
+            formatted = `Ticket: #${splitData}`
+        } else if ( event.type === 'ValveOpened' || event.type ==='ValveClosed' ) {
+            formatted = `${event.data}`
+        } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'Overweight' || event.type === 'TareWeightContamination' ) {
+            formatted = `${event.data}`
+        } else {
+            formatted = ''
+        }
+        return formatted;
+    };
+
     render() {
 
         return(
             <div style={{ width: '100%' }} >
-                  { this.state.showTooltip ? 
-                        <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 20,padding: 5, position: 'absolute', top: 100, left: '40%', height: 240, width: 260 }} >
-                            <p>id: {this.state.currentTooltipEvent.eId}</p>
-                            <p>transaction: {this.state.currentTooltipEvent.tId}</p> 
-                            <p>location: {this.state.currentTooltipEvent.location}</p>
-                            <p>type: {this.state.currentTooltipEvent.type}</p>
-                            <p>data: {this.state.currentTooltipEvent.data}</p>
-                            <p>time: {this.state.currentTooltipEvent.timestamp}</p> 
-                        </div> :
-                        null
-                    }
+
+                { this.state.showTooltip ? 
+                    <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 20, position: 'absolute', top: 100, left: '40%', height: 'auto', width: 'auto' }} >
+                        <div style={{ width: 'auto', 
+                                      backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type), 
+                                      borderTopLeftRadius: 5,
+                                      borderTopRightRadius: 5,
+                                      margin: 0,
+                                      paddingTop: 5,
+                                      paddingBottom: 5,
+                                      paddingRight: 10, 
+                                      paddingLeft: 10,  
+                                      borderBottom: '1px solid grey',
+                                      textAlign: 'left'}}>
+                            <p style={{ fontWeight: 'bold', fontSize: 12, color: 'white', margin: 0, padding: 0 }}>
+                                {this.state.currentTooltipEvent.type.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")} - {this.state.currentTooltipEvent.location}
+                            </p>
+                        </div>
+                        <div style={{ padding: 5 }}>
+                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>transaction id: {this.state.currentTooltipEvent.tId}</p> 
+                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>date: {moment(this.state.currentTooltipEvent.timestamp).format('MM/DD/YYYY')}</p> 
+                            <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>time: {moment(this.state.currentTooltipEvent.timestamp).format('hh:mm:ss a')}</p> 
+                        </div>
+                            { this.state.currentTooltipEvent.data !== '' ?
+                                <div style={{ width: 'auto', padding: 5, borderTop: '1px solid grey', backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type) }}>
+                                    <p style={{ color: 'white', fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>{this.parseTooltipDataDisplay(this.state.currentTooltipEvent)}</p> 
+                                </div>:
+                                    null
+                                }
+                    </div> :
+                    null
+                }
+
                 <ReactTable
                     style={{ border: 'none' }}
                     className='-striped -highlight'
                     data={data}
                     columns={this.columns}
                     showPagination={false}
-                    defaultPageSize={10}
+                    defaultPageSize={11}
                     getTheadProps={ () => {
                         return {
                             style: {
                                 fontWeight: 'bold',
+                                border: 'none'
                             }
                         }
                     }}
@@ -1874,6 +1975,13 @@ class TableTest extends React.Component {
                             style: {
                                 border: 'none',
                                 overflow: 'visible',
+                            }
+                        }
+                    }}
+                    getTrProps={ () => {
+                        return {
+                            style: {
+                                border: 'none',
                             }
                         }
                     }}

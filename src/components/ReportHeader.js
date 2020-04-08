@@ -9,17 +9,20 @@ import moment from 'moment';
 
 const ReportHeader= props => {
   return (
-    <Row  center="xs" >
+    <Row center="xs" around="xs" >
 
       {/* heading */}
-      <Col xs={6} md={6} lg={3} >
-        <h1 style={{ color: 'goldenrod', padding: 0, margin: 0 }}>Transactions</h1> 
+      <Col xs={6} md={6} lg={4} >
+        <Row start="xs">
+          <h1 style={{ color: 'goldenrod', padding: 0, margin: 0, marginLeft: 20 }}>Transactions</h1> 
+        </Row>
       </Col>
     
       {/* date picker */}
-      <Col xs={6} md={6} lg={3} >
+      <Col xs={6} md={6} lg={4}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <KeyboardDatePicker
+          style={{ marginTop: 5}}
               disableToolbar
               variant="inline"
               format="MM/DD/YYYY"
@@ -34,17 +37,19 @@ const ReportHeader= props => {
       </Col>
 
       {/* select buttons   */}
-      <Col xs={8} md={6} lg={3}>
+      {/* <Col xs={7} md={6} lg={3}>
         <ButtonGroup variant="contained" 
                     aria-label="contained primary button group">
           <Button style={{ color: 'white', fontWeight: 'bold', background: 'goldenrod', borderColor: 'goldenrod' }}>Transactions</Button>
           <Button style={{ color: 'goldenrod', fontWeight: 'bold', background: 'transparent', borderColor: 'goldenRod' }}>Vehicles</Button>
         </ButtonGroup>
-      </Col>
+      </Col> */}
       
       {/* date */}
-      <Col xs={4} md={6} lg={3}>
-        <p>{moment().format('MMMM Do, YYYY')}</p>
+      <Col xsOffset={6} lgOffset={0} xs={6} md={6} lg={4}>
+        <Row end="xs">
+        <p style={{ marginRight: 20, fontWeight: 'normal' }}>{moment().format('MMMM Do, YYYY')}</p>
+        </Row>
       </Col>
 
     </Row>
