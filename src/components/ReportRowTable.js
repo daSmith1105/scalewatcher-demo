@@ -57,7 +57,7 @@ class TableTest extends React.Component {
             showEventModal: true 
         }
         this.columns = [{
-            Header: 'Lpn / Id',
+            Header: <span style={{ fontSize: 12, marginRight: 40, marginTop: 5, color: 'grey'}}>Lpn / Id</span>,
             accessor: 'lpn',
             width: 110,
             className: "stickyL",
@@ -65,8 +65,8 @@ class TableTest extends React.Component {
             Cell: row => (
                 <span style={{ verticalAlign: 'middle' }}>
                     { row.original.lpn !== '' ?
-                        <span style={{ float: 'left' }}>{row.original.lpn}</span> :
-                        <span style={{ float: 'left' }}>-- Lpn --</span>
+                        <span style={{ float: 'left', fontWeight: 'bold', fontSize: 12, color: 'grey' }}>{row.original.lpn}</span> :
+                        <span style={{ float: 'left', fontWeight: 'bold', fontSize: 12, color: 'grey' }}>-- Lpn --</span>
                     }
                     <span style={{  float: 'right', 
                                     paddingRight: 3, 
@@ -248,61 +248,73 @@ class TableTest extends React.Component {
             Header: <span style={{ fontSize: 10, fontWeight: 'bold', color: 'black' }}>2am</span>,
             accessor: 'id',
             width: 38,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '00', '04')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey'}}>:05</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '05', '09')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:10</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '10', '14')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:15</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '15', '19')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:20</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '20', '24')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:25</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '25', '29')
         }, {
             Header: <span style={{ fontSize: 10, color: 'black' }}>:30</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '30', '34')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:35</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '35', '39')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:40</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '40', '44')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:45</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '45', '49')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:50</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '50', '54')
         }, {
             Header: <span style={{ fontSize: 8, color: 'grey' }}>:55</span>,
             accessor: 'events',
             width: 36,
+            sortable: false,
             Cell: row => this.parseRowEvents(row.original.events, '02', '55', '59')
         }, {
             id: '3am',
@@ -1789,10 +1801,11 @@ class TableTest extends React.Component {
             Cell: row => <span></span>
         }, {
             id: 'time-in-facility',
-            Header: <span style={{ fontSize: 8, color: 'grey' }}>Time In Facility</span>,
+            Header: <span style={{ fontSize: 8, color: 'grey', width: '100%' }}>Time In Facility</span>,
             accessor: t => t.end - t.start,
-            width: 78,
+            width: 80,
             show: true,
+            sortable: false,
             className: "stickyR",
             headerClassName: "stickyR",
             // this will need to colllect all transactions based on sLpn or some other data point and find start and end points
@@ -1800,7 +1813,7 @@ class TableTest extends React.Component {
             // do we go through the transaction and do the calculation or just have a previous total and state 'pending' or 'onsite'
             Cell: row => (
                 row.original.complete ?
-                <span style={{ verticalAlign: 'middle', fontSize: 10, fontWeight: 'bold', color: 'grey' }}>
+                <span style={{ verticalAlign: 'middle', width: '100%', fontSize: 10, fontWeight: 'bold', color: 'grey' }}>
                     { moment(row.original.end).diff(moment(row.original.start), 'minutes' ) } min
                 </span> :
                 <span></span>
@@ -1896,6 +1909,7 @@ class TableTest extends React.Component {
                     className='-striped -highlight'
                     data={data}
                     columns={this.columns}
+                    sortable={false}
                     showPagination={false}
                     defaultPageSize={data.length + 1}
                     getTheadProps={ () => {
