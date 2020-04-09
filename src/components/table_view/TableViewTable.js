@@ -40,15 +40,15 @@ class TableViewTable extends React.Component {
         super(props);
 
         this.state = {
-            test: false
+            expanded: {}
         }
 
         this.columns = [{
+
             Header: 'id',
             accessor: 'tId',
             show: true,
             width: 40,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
         }, {
@@ -56,7 +56,6 @@ class TableViewTable extends React.Component {
             accessor:'lpn',
             show: true,
             width: 140,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.lpn}</span>
         }, {
@@ -64,7 +63,6 @@ class TableViewTable extends React.Component {
             accessor: 'start',
             show: true,
             width: 200,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.start}</span>
         }, {
@@ -72,43 +70,29 @@ class TableViewTable extends React.Component {
             accessor: 'end',
             show: true,
             width: 200,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.end}</span>
         }, {
             Header: '# of events',
             accessor: 'events',
             show: true,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: row => <span style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
         }, {
             Header: 'ticket',
             accessor: 'events',
             show: true,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
         }, {
             Header: 'images',
             accessor: 'events',
             show: true,
-            // className: "stickyTop",
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
           }];
         
         this.columnsSub = [{
-        //     Header: 'id',
-        //     accessor: 'eId',
-        //     show: true,
-        //     Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.eId}</span>
-        // }, {
-        //     Header: 'Transaction Id',
-        //     accessor:'tId',
-        //     show: true,
-        //     Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
-        // }, {
             Header: 'Location',
             accessor: 'location',
             show: true,
@@ -131,9 +115,17 @@ class TableViewTable extends React.Component {
           }];
     }
 
-
+    handleRowExpanded(newExpanded, index, event) {
+        this.setState({
+        // we override newExpanded, keeping only current selected row expanded
+            expanded: {
+                [index[0]]: !this.state.expanded[index[0]]
+            },
+        });
+    }
 
     render() {
+        const { expanded } = this.state.expanded
 
         return(
             <div style={{ height: window.innerHeight - 300, width: '100%' }}>
@@ -147,14 +139,20 @@ class TableViewTable extends React.Component {
                     filterable={true}
                     showPagination={true}
                     showPageSizeOptions={false}
+                    // enable this to limit the expanded row to 1 at a time
+                    // expanded={this.state.expanded}
+                    onExpandedChange={(newExpanded, index, event) => this.handleRowExpanded(newExpanded, index, event)}
                     getTrProps={(state, rowInfo, column) => {
                         if(rowInfo){
-                            return  { style: state.expanded[rowInfo.index] ? { background: "rgba(37, 116, 169, .7)", 
+                            return  { style: state.expanded[rowInfo.index] ? { background: "rgba(37, 116, 169, .8)", 
                                                                               color: "white",
                                                                               height: 26,
                                                                               margin: 0, 
                                                                               padding: 0,
-                                                                              boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)` 
+                                                                              boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)`,
+                                                                              position: 'sticky',
+                                                                              top: 0,
+                                                                              zIndex: 1
                                                                             } : 
                                                                             {   height: 26,
                                                                                 margin: 0, 
@@ -173,12 +171,22 @@ class TableViewTable extends React.Component {
                    
                     SubComponent={row => (
                             <ReactTable
-                                style={{ width: '94%', marginLeft: 40, marginTop: 10, marginBottom: 10, fontSize: 12, color: 'grey', fontWeight: 'bold' }}
+                                style={{    width: '94%', 
+                                            marginLeft: 40, 
+                                            marginTop: 10, 
+                                            marginBottom: 10, 
+                                            fontSize: 12, 
+                                            color: 'grey', 
+                                            fontWeight: 'bold',  
+                                           }}
                                 className='-striped -highlight rTableView2'
                                 data={row.original.events}
                                 columns={this.columnsSub}
                                 getProps={() => {
-                                    return { style: {borderBottomWidth: 2, borderRightWidth: 2, borderLeftWidth: 2, borderColor:  "rgba(37, 116, 169, .7)" }};
+                                    return { style: {   borderBottomWidth: 2, 
+                                                        borderRightWidth: 2, 
+                                                        borderLeftWidth: 2, 
+                                                        borderColor:  "rgba(37, 116, 169, .7)" }};
                                 }}
                                 getTheadThProps={(state, rowInfo, column) => {
                                         return state.expanded ? { style: {  background: "grey", 

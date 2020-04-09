@@ -48,6 +48,10 @@
   background-color: white;
 }
 
+.rt-expandable {
+  color: 'white'
+}
+
 .rTransactionTable .rt-tbody {
   overflow: visible !important;
 }
