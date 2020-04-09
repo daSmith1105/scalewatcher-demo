@@ -47,27 +47,87 @@ class TableViewTable extends React.Component {
             Header: 'id',
             accessor: 'tId',
             show: true,
-            width: 40
+            width: 40,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
         }, {
             Header: 'lpn',
             accessor:'lpn',
             show: true,
-            width: 140
+            width: 140,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.lpn}</span>
         }, {
             Header: 'start',
             accessor: 'start',
             show: true,
-            width: 200
+            width: 200,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.start}</span>
         }, {
             Header: 'end',
             accessor: 'end',
             show: true,
-            width: 200
+            width: 200,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.end}</span>
         }, {
-            Header: 'events',
+            Header: '# of events',
             accessor: 'events',
             show: true,
-            Cell: row => <span style={{ whiteSpace: 'nowrap'}}>{JSON.stringify(row.original.events)}</span> 
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: row => <span style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
+        }, {
+            Header: 'ticket',
+            accessor: 'events',
+            show: true,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
+        }, {
+            Header: 'images',
+            accessor: 'events',
+            show: true,
+            // className: "stickyTop",
+            headerClassName: "stickyTop",
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
+          }];
+        
+        this.columnsSub = [{
+        //     Header: 'id',
+        //     accessor: 'eId',
+        //     show: true,
+        //     Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.eId}</span>
+        // }, {
+        //     Header: 'Transaction Id',
+        //     accessor:'tId',
+        //     show: true,
+        //     Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
+        // }, {
+            Header: 'Location',
+            accessor: 'location',
+            show: true,
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.location}</span>
+        }, {
+            Header: 'Type',
+            accessor: 'type',
+            show: true,
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.type}</span>
+        }, {
+            Header: 'Data',
+            accessor: 'data',
+            show: true,
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.data}</span>
+        }, {
+            Header: 'Date/Time',
+            accessor: 'timestamp',
+            show: true,
+            Cell: row => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.timestamp).format('MM-DD-YYY hh:mm:ss a')}</span>
           }];
     }
 
@@ -76,18 +136,63 @@ class TableViewTable extends React.Component {
     render() {
 
         return(
-            <div style={{ width: '100%', overflow: 'scroll' }}>
+            <div style={{ height: window.innerHeight - 300, width: '100%' }}>
 
                 <ReactTable
-                    style={{ width: '200%'}}
-                    className='-striped -highlight'
+                    style={{ height: window.innerHeight - 300, fontSize: 12, color: 'grey', fontWeight: 'bold' }}
+                    className='-striped -highlight rTableView1'
                     data={data}
                     columns={this.columns}
                     sortable={true}
                     filterable={true}
                     showPagination={true}
-                    defaultPageSize={10}
+                    showPageSizeOptions={false}
+                    getTrProps={(state, rowInfo, column) => {
+                        if(rowInfo){
+                            return  { style: state.expanded[rowInfo.index] ? { background: "rgba(37, 116, 169, .7)", 
+                                                                              color: "white",
+                                                                              height: 26,
+                                                                              margin: 0, 
+                                                                              padding: 0,
+                                                                              boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)` 
+                                                                            } : 
+                                                                            {   height: 26,
+                                                                                margin: 0, 
+                                                                                padding: 0,
+                                                                            }
+                                                                        };
+                                                          
+                        } else {
+                            return { style: {   height: 26,
+                                                margin: 0, 
+                                                padding: 0,
+                                             } 
+                                    };
+                        }
+                    }}
                    
+                    SubComponent={row => (
+                            <ReactTable
+                                style={{ width: '94%', marginLeft: 40, marginTop: 10, marginBottom: 10, fontSize: 12, color: 'grey', fontWeight: 'bold' }}
+                                className='-striped -highlight rTableView2'
+                                data={row.original.events}
+                                columns={this.columnsSub}
+                                getProps={() => {
+                                    return { style: {borderBottomWidth: 2, borderRightWidth: 2, borderLeftWidth: 2, borderColor:  "rgba(37, 116, 169, .7)" }};
+                                }}
+                                getTheadThProps={(state, rowInfo, column) => {
+                                        return state.expanded ? { style: {  background: "grey", 
+                                                                            color: "white", 
+                                                                            boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)`
+                                                                        }} : "";
+                                }}
+                                getTrProps={ () => {
+                                    return { style: { height: 26 } }
+                                }}
+                                filterable={false}
+                                showPagination={false}
+                                defaultPageSize={row.original.events.length} />
+                        )}
                 />
             </div>
         )

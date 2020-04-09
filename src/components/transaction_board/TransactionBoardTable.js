@@ -1897,7 +1897,7 @@ class TransactionBoardTable extends React.Component {
 
                 <ReactTable
                     style={{ border: 'none' }}
-                    className='-striped -highlight'
+                    className='-striped -highlight rTransactionTable'
                     data={data}
                     columns={this.columns}
                     sortable={false}

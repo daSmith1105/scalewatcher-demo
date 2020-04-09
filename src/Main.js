@@ -70,7 +70,7 @@ parseTooltipDataDisplay = event => {
       <Col xs={12} onMouseMove={ this._onMouseMove }>
 
         { this.state.showTooltip ? 
-          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 100, position: 'absolute', top: this.state.y - 200,  left: this.state.x - (this.state.x / 16), height: 'auto', width: 'auto' }} >
+          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 10, position: 'absolute', top: this.state.y - 240,  left: this.state.x - (this.state.x / 16), height: 123, width: 'auto' }} >
             <div style={{ width: 'auto', 
                           backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type), 
                           borderTopLeftRadius: 5,
@@ -92,7 +92,7 @@ parseTooltipDataDisplay = event => {
               <p style={{ fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>time: {moment(this.state.currentTooltipEvent.timestamp).format('hh:mm:ss a')}</p> 
             </div>
             { this.state.currentTooltipEvent.data !== '' ?
-                <div style={{ width: 'auto', padding: 5, borderTop: '1px solid grey', backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type) }}>
+                <div style={{ width: 'auto', padding: 5, borderTop: '1px solid grey', borderBottomRightRadius: 5, borderBottomLeftRadius: 5, backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type) }}>
                   <p style={{ color: 'white', fontWeight: 'bold', fontSize: 12, margin: 0, padding: 2 }}>{this.parseTooltipDataDisplay(this.state.currentTooltipEvent)}</p> 
                 </div>:
                   null
@@ -102,7 +102,7 @@ parseTooltipDataDisplay = event => {
         }
   
         { this.props.activeView === 'transaction' ? 
-          <Row center="xs" className="transition" style={{ marginTop: 20}} >
+          <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
             <Col xs={12} sm={12} md={10} lg={10} xl={10}>
               <TransactionBoardContainer toggleTooltip={ this.toggleTooltip } />
             </Col>
@@ -111,16 +111,16 @@ parseTooltipDataDisplay = event => {
         }
 
         { this.props.activeView === 'table' ? 
-                  <Row center="xs" className="transition" style={{ marginTop: 20}} >
+                  <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
                     <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                    <TableViewContainer />
+                      <TableViewContainer />
                     </Col>
                   </Row> :
                   null
                 }
 
         { this.props.activeView === 'log' ? 
-                  <Row center="xs" className="transition" style={{ marginTop: 20}} >
+                  <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
                     <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                       <h1>Log / Reports</h1>
                     </Col>
