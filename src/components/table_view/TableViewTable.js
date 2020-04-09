@@ -4,6 +4,11 @@ import 'react-table-6/react-table.css'
 import { transactions, events } from '../mockData.js';
 import moment from 'moment';
 import '../../App.css'
+// import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+// import EmailIcon from '@material-ui/icons/Email';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import ImageIcon from '@material-ui/icons/Image';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 const data =  transactions.map( t => (
     {
@@ -12,6 +17,7 @@ const data =  transactions.map( t => (
         start: t.dStartTimestamp,
         end: t.dEndTimestamp,
         complete: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? true : false,
+        duration: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? moment(t.dEndTimestamp).diff(moment(t.dStartTimestamp), 'minutes' )  : null,
         events:  events.filter( ev => ev.bTransId === t.id ).map( (ev) => (
             {
                 eId: ev.id,
@@ -44,7 +50,6 @@ class TableViewTable extends React.Component {
         }
 
         this.columns = [{
-
             Header: 'id',
             accessor: 'tId',
             show: true,
@@ -55,25 +60,22 @@ class TableViewTable extends React.Component {
             Header: 'lpn',
             accessor:'lpn',
             show: true,
-            width: 140,
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.lpn}</span>
         }, {
             Header: 'start',
             accessor: 'start',
             show: true,
-            width: 200,
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.start}</span>
         }, {
-            Header: 'end',
-            accessor: 'end',
+            Header: 'duration',
+            accessor: 'duration',
             show: true,
-            width: 200,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.end}</span>
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.duration} min</span>
         }, {
-            Header: '# of events',
+            Header: 'events in transaction',
             accessor: 'events',
             show: true,
             headerClassName: "stickyTop",
@@ -83,15 +85,19 @@ class TableViewTable extends React.Component {
             accessor: 'events',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{ row.original.events.filter(ev => ev.type === 'TicketReceived')[0] ? row.original.events.filter(ev => ev.type === 'TicketReceived')[0].data : ''}</span>
         }, {
-            Header: 'images',
+            Header: 'pdf',
             accessor: 'events',
             show: true,
+            width: 70,
+            filterable: false,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}></span>
+            Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                 onClick={ () => alert(`view entire transaction with id ${row.original.tId} as pdf.`)}><PictureAsPdfIcon style={{ fontSize: 16 }} /></span>
           }];
         
+
         this.columnsSub = [{
             Header: 'Location',
             accessor: 'location',
@@ -103,7 +109,7 @@ class TableViewTable extends React.Component {
             show: true,
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.type}</span>
         }, {
-            Header: 'Data',
+            Header: 'Basic Data',
             accessor: 'data',
             show: true,
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.data}</span>
@@ -111,7 +117,16 @@ class TableViewTable extends React.Component {
             Header: 'Date/Time',
             accessor: 'timestamp',
             show: true,
-            Cell: row => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.timestamp).format('MM-DD-YYY hh:mm:ss a')}</span>
+            Cell: row => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.timestamp).format('MM-DD-YYYY hh:mm:ss a')}</span>
+        }, {
+            Header: 'image links or other media',
+            accessor: 'timestamp',
+            show: true,
+            Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view first image for event with id ${row.original.eId}.`)} />
+                                <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view second image for event with id ${row.original.eId}.`)} />
+                                <DescriptionIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view ticket or data for event with id ${row.original.eId} as pdf.`)} />
+                            </span>
           }];
     }
 
@@ -125,7 +140,6 @@ class TableViewTable extends React.Component {
     }
 
     render() {
-        const { expanded } = this.state.expanded
 
         return(
             <div style={{ height: window.innerHeight - 300, width: '100%' }}>
@@ -140,7 +154,7 @@ class TableViewTable extends React.Component {
                     showPagination={true}
                     showPageSizeOptions={false}
                     // enable this to limit the expanded row to 1 at a time
-                    // expanded={this.state.expanded}
+                    expanded={this.state.expanded}
                     onExpandedChange={(newExpanded, index, event) => this.handleRowExpanded(newExpanded, index, event)}
                     getTrProps={(state, rowInfo, column) => {
                         if(rowInfo){

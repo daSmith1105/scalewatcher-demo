@@ -3,6 +3,7 @@ import TransactionBoardContainer from './components/transaction_board/Transactio
 import TableViewContainer from './components/table_view/TableViewContainer';
 import { Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
+import tempImg from './todo.jpg';
 
 class Main extends React.Component {
   state = {
@@ -122,7 +123,8 @@ parseTooltipDataDisplay = event => {
         { this.props.activeView === 'log' ? 
                   <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
                     <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                      <h1>Log / Reports</h1>
+                      <p style={{ margin: 0, marginTop: -10, padding: 0 }}>This is here just for reference as the search and drill down decisions are being made.</p>
+                      <img src={ tempImg } height={680} width={500} alt="" />
                     </Col>
                   </Row> :
                   null

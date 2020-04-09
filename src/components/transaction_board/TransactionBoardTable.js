@@ -18,6 +18,7 @@ const data =  transactions.map( t => (
         start: t.dStartTimestamp,
         end: t.dEndTimestamp,
         complete: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? true : false,
+        duration: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? moment(t.dEndTimestamp).diff(moment(t.dStartTimestamp), 'minutes' )  : null,
         events:  events.filter( ev => ev.bTransId === t.id ).map( (ev) => (
             {
                 eId: ev.id,
@@ -1803,11 +1804,11 @@ class TransactionBoardTable extends React.Component {
             // TODO: what if there is an start, but not complete - 
             // do we go through the transaction and do the calculation or just have a previous total and state 'pending' or 'onsite'
             Cell: row => (
-                row.original.complete ?
+                row.original.duration ?
                 <span style={{ verticalAlign: 'middle', width: '100%', fontSize: 10, fontWeight: 'bold', color: 'grey' }}>
-                    { moment(row.original.end).diff(moment(row.original.start), 'minutes' ) } min
+                    {row.original.duration} min
                 </span> :
-                <span></span>
+                <span style={{ verticalAlign: 'middle', width: '100%', fontSize: 10, fontWeight: 'bold', color: 'grey' }}>pending</span>
             )
           
           }];
