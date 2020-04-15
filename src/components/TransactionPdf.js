@@ -67,10 +67,10 @@ const TransactionPdf = props => {
                         <div style={{ marginLeft: 5 }}>
                             { events.map( (ev, i) => (
                                 <div key={ev.eId}>                           
-                                    <p  style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>{i + 1} )</span>  {ev.timestamp} <span style={{ marginLeft: 8, fontWeight: 'bold' }}>{ev.type}</span></p>
-                                    <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 56 }}><span style={{ fontWeight: 'bold' }}>location:</span>  {ev.location}</p>
+                                    <p  style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>{i + 1} ) </span><span style={{ marginRight: 8, fontWeight: 'bold' }}> {ev.type}</span>  {ev.timestamp}</p>
+                                    <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 60 }}><span style={{ fontWeight: 'bold' }}>location:</span>  {ev.location}</p>
                                     {ev.data !== '' ?
-                                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 56 }}><span style={{ fontWeight: 'bold' }}>data:</span> {transformData(ev.type,ev.data)}</p> :
+                                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 60 }}><span style={{ fontWeight: 'bold' }}>data:</span> {transformData(ev.type,ev.data)}</p> :
                                         null
                                     }
                                 </div>
