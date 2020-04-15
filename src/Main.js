@@ -50,7 +50,7 @@ parseTooltipDataDisplay = event => {
         formatted = `${event.data}`
     } else if ( event.type === 'OverWeight' ) {
       let splitData = event.data.split(',');
-        formatted = `${splitData[0]} lb < ${splitData[1]} lb`;
+        formatted = `${splitData[0]} lb > ${splitData[1]} lb`;
     } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'TareWeightContamination' ) {
         formatted = event.data
     } else {

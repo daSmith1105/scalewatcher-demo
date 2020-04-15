@@ -13,6 +13,31 @@
   display: none;
 }
 
+button {
+  cursor: pointer;
+  background-color: white;
+  border-color: grey;
+  border-width: 2px;
+  border-radius: 5px;
+  color: grey
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: goldenrod;
+  border-color: goldenrod;
+  color: white;
+}
+
+.button-like {
+
+}
+.button-like:hover {
+  cursor: pointer;
+  background-color: goldenrod;
+  color: white;
+}
+
 .link {
   transition: .5s;
 }
@@ -46,10 +71,6 @@
   top: 0;
   z-index: 1;
   background-color: white;
-}
-
-.rt-expandable {
-  color: 'white'
 }
 
 .rTransactionTable .rt-tbody {

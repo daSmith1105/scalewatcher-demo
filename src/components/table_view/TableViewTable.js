@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css'
-import { transactions, events } from '../mockData.js';
+import { transactions, events, tickets } from '../mockData.js';
 import moment from 'moment';
 import '../../App.css'
-// import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-// import EmailIcon from '@material-ui/icons/Email';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import ImageIcon from '@material-ui/icons/Image';
-import DescriptionIcon from '@material-ui/icons/Description';
+import { PictureAsPdf, MoreVert }  from '@material-ui/icons';
+import TicketTemplate from '../TicketTemplate';
+import ActionsModal from './ActionsModal';
 
 const data =  transactions.map( t => (
     {
@@ -18,6 +16,7 @@ const data =  transactions.map( t => (
         end: t.dEndTimestamp,
         complete: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? true : false,
         duration: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? moment(t.dEndTimestamp).diff(moment(t.dStartTimestamp), 'minutes' )  : null,
+        checked: false,
         events:  events.filter( ev => ev.bTransId === t.id ).map( (ev) => (
             {
                 eId: ev.id,
@@ -46,10 +45,37 @@ class TableViewTable extends React.Component {
         super(props);
 
         this.state = {
-            expanded: {}
+            expanded: {},
+            checked: {},
+            showTicket: false,
+            showActionsModal: false,
+            currentTransaction: {}
         }
 
         this.columns = [{
+            id: 'checked',
+            Header: '',
+            accessor: r => r.checked,
+            show: true,
+            width: 40,
+            headerClassName: "stickyTop",
+            Cell: (row) => <span><input type="checkbox" 
+                                        value={ row.original.checked } 
+                                        checked={ row.original.checked }
+                                        style={{ marginTop: -10 }}
+                                        onClick={ () => {
+                                            row.original.checked === false ? row.original.checked = true : row.original.checked = false;
+                                            console.log(row.original.tId, row.original.checked)
+                                        }} /></span>
+        }, {
+            Header: '',
+            expander: true,
+            accessor: 'tId',
+            show: true,
+            filteable: false,
+            sortable: true,
+            headerClassName: "stickyTop",
+        }, {
             Header: 'id',
             accessor: 'tId',
             show: true,
@@ -75,26 +101,36 @@ class TableViewTable extends React.Component {
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.duration} min</span>
         }, {
+
             Header: 'events in transaction',
             accessor: 'events',
             show: true,
             headerClassName: "stickyTop",
             Cell: row => <span style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
         }, {
+            id: 'ticket',
             Header: 'ticket',
-            accessor: 'events',
+            accessor: t => t.events.filter(ev => ev.type === 'TicketReceived')[0] ? t.events.filter(ev => ev.type === 'TicketReceived')[0].data.split(':')[1] : '',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{ row.original.events.filter(ev => ev.type === 'TicketReceived')[0] ? row.original.events.filter(ev => ev.type === 'TicketReceived')[0].data : ''}</span>
+            Cell: (row) => row.original.events.filter(ev => ev.type === 'TicketReceived')[0] ? 
+                            <span className="button-like"style={{ padding: 10, margin: 0, marginTop: -20,  width: '100%', overflow: 'hidden', height: 30, border: 'none', borderRadius: 0, verticalAlign: 'center' }}
+                                    onClick={ () => this.displayTicket( tickets.filter( t => t.id.toString() === row.original.events.filter(ev => ev.type === 'TicketReceived')[0].data.split(':')[1].trim() ) ) }>
+                                    {row.original.events.filter(ev => ev.type === 'TicketReceived')[0].data.split(':')[1]}
+                            </span> :
+                            null
         }, {
-            Header: 'pdf',
+            Header: 'actions',
             accessor: 'events',
             show: true,
             width: 70,
             filterable: false,
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                                 onClick={ () => alert(`view entire transaction with id ${row.original.tId} as pdf.`)}><PictureAsPdfIcon style={{ fontSize: 16 }} /></span>
+                                 onMouseEnter={ () => this.displayActionsModal(row.original) }>
+                                {/* onMouseLeave={ () => this.closeActionsModal() } */}
+                                <MoreVert style={{ fontSize: 16 }} />
+                                </span>
           }];
         
 
@@ -118,25 +154,50 @@ class TableViewTable extends React.Component {
             accessor: 'timestamp',
             show: true,
             Cell: row => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.timestamp).format('MM-DD-YYYY hh:mm:ss a')}</span>
-        }, {
-            Header: 'image links or other media',
-            accessor: 'timestamp',
-            show: true,
-            Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view first image for event with id ${row.original.eId}.`)} />
-                                <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view second image for event with id ${row.original.eId}.`)} />
-                                <DescriptionIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view ticket or data for event with id ${row.original.eId} as pdf.`)} />
-                            </span>
+        // }, {
+        //     Header: 'image links or other media',
+        //     accessor: 'timestamp',
+        //     show: true,
+        //     Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        //                         <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view first image for event with id ${row.original.eId}.`)} />
+        //                         <ImageIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view second image for event with id ${row.original.eId}.`)} />
+        //                         <DescriptionIcon style={{ fontSize: 16, marginRight: 12, marginLeft: 12 }} onClick={ () => alert(`view ticket or data for event with id ${row.original.eId} as pdf.`)} />
+        //                     </span>
           }];
     }
 
-    handleRowExpanded(newExpanded, index, event) {
+    handleRowExpanded( newExpanded, index, event ) {
         this.setState({
         // we override newExpanded, keeping only current selected row expanded
             expanded: {
                 [index[0]]: !this.state.expanded[index[0]]
             },
         });
+    }
+
+    handleRowChecked( index ) {
+        console.log(index)
+        this.setState({
+        // we override newExpanded, keeping only current selected row expanded
+            checked: {
+                [index]: !this.state.checked[index]
+            },
+        });
+    }
+
+    displayTicket = (ticket) => {
+        this.setState({ currentTicket: ticket[0], showTicket: true });
+    }
+    closeTicketView = () => {
+        this.setState({ currentTicket: {}, showTicket: false });
+    }
+
+    displayActionsModal = (transaction) => {
+        this.setState({ currentTransaction: transaction, showActionsModal: true });
+    }
+
+    closeActionsModal = () => {
+        this.setState({ currentTransaction: {}, showActionsModal: false });
     }
 
     render() {
@@ -158,15 +219,15 @@ class TableViewTable extends React.Component {
                     onExpandedChange={(newExpanded, index, event) => this.handleRowExpanded(newExpanded, index, event)}
                     getTrProps={(state, rowInfo, column) => {
                         if(rowInfo){
-                            return  { style: state.expanded[rowInfo.index] ? { background: "rgba(37, 116, 169, .8)", 
-                                                                              color: "white",
-                                                                              height: 26,
-                                                                              margin: 0, 
-                                                                              padding: 0,
-                                                                              boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)`,
-                                                                              position: 'sticky',
-                                                                              top: 0,
-                                                                              zIndex: 1
+                            return  { style: state.expanded[rowInfo.index] ? {  background: "rgba(37, 116, 169, .8)", 
+                                                                                color: "white",
+                                                                                height: 26,
+                                                                                margin: 0, 
+                                                                                padding: 0,
+                                                                                boxShadow: `0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)`,
+                                                                                position: 'sticky',
+                                                                                top: 0,
+                                                                                zIndex: 1
                                                                             } : 
                                                                             {   height: 26,
                                                                                 margin: 0, 
@@ -216,6 +277,22 @@ class TableViewTable extends React.Component {
                                 defaultPageSize={row.original.events.length} />
                         )}
                 />
+
+                { this.state.showTicket ? 
+                    <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', width: '100vw', zIndex: 1, backgroundColor: 'rgba(0,0,0,.6)' }}>
+                        <TicketTemplate ticket={ this.state.currentTicket }
+                                        closeTicketView={ this.closeTicketView } /> 
+                    </div>:
+                    null
+                }
+
+                { this.state.showActionsModal ? 
+                    // need to get the row index so we can display this below the row and to the right
+                    <div style={{ position: 'fixed', top: 200, right: 20, zIndex: 1 }}>
+                        <ActionsModal transaction={ this.state.currentTransaction } /> 
+                    </div>:
+                    null
+                }
             </div>
         )
     }
