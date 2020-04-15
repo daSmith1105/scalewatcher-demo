@@ -68,7 +68,7 @@ parseTooltipDataDisplay = event => {
 
   render() {
     return (
-      <Col xs={12} onMouseMove={ this._onMouseMove }>
+      <Col xs={12} onMouseMove={ this._onMouseMove } style={{ maxwidth: 900, margin: 'auto' }}>
 
         { this.state.showTooltip ? 
           <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 10, position: 'absolute', top: this.state.y - 240,  left: this.state.x - (this.state.x / 16), height: 123, width: 'auto' }} >
@@ -114,7 +114,7 @@ parseTooltipDataDisplay = event => {
         { this.props.activeView === 'table' ? 
                   <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
                     <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                      <TableViewContainer />
+                      <TableViewContainer x={ this.state.x} y={ this.state.y } />
                     </Col>
                   </Row> :
                   null

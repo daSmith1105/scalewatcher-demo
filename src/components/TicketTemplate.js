@@ -29,26 +29,33 @@ const TicketTemplate = props => {
 
     return (
         <Col xs={12} > 
-            <div style={{ position: 'relative', backgroundColor: 'white', padding: 20, width: '70%', margin: 'auto', textAlign: 'left', height: 'auto', maxHeight: '85vh', marginTop: '10vh', overflow: 'scroll', borderRadius: 5,  boxShadow: '5px 10px 18px #888888' }}>
-                <Row center="xs" around="xs" >
+            <div style={{ position: 'relative', backgroundColor: 'white', padding: 20, width: '70%', maxWidth: 720,margin: 'auto', textAlign: 'left', height: 'auto', maxHeight: '85vh', marginTop: '10vh', overflow: 'scroll', borderRadius: 5,  boxShadow: '5px 10px 18px #888888' }}>
+                <Row center="xs" around="xs"style={{ padding: 10 }} >
                     <Col xs={12} md={6} style={{ textAlign: 'left' }}>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Ticket #: {id}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Timestamp: {timestamp}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Order #: {order}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Batch #: {batch}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Plant: {plant}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Customer: {customer}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Carrier: {carrier}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Truck: {truck}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Product: {product}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Location:: {location}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40}}>Tare Weight: {tare}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Gross Weight: {gross}</p>
-                        <p style={{ padding: 0, fontSize: 12, color: 'grey', margin: 2, marginLeft: 40 }}>Net Weight: {net}</p>
+                        <p style={{ padding: 0, fontSize: '2vmin', color: 'grey', margin: 2, marginLeft: 40, fontWeight: 'bold', marginBotoom: 20 }}>Ticket: {id}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Timestamp:</span> {timestamp}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Order:</span> {order}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Batch:</span> {batch}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Plant:</span> {plant}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Customer:</span> {customer}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Carrier:</span> {carrier}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Truck:</span> {truck}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Product:</span> {product}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Location:</span> {location}</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Tare Weight:</span> {tare} lb</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Gross Weight:</span> {gross} lb</p>
+                        <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>Net Weight:</span> {net} lb</p>
                     </Col>
-                    <Col xs={10} md={6} >
+                    <Col xs={10} md={6} style={{ marginTop: 10 }}>
                     {/* images here */}
                         <img src={frontImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                    </Col>
+                </Row>
+                <Row center="xs" around="xs" style={{ padding: 10, marginTop: -10 }}>
+                    <Col xs={10} md={6} >
+                        <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                    </Col>
+                    <Col xs={10} md={6} >
                         <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
                     </Col>
                 </Row>

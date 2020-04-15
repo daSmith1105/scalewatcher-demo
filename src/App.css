@@ -30,7 +30,7 @@ button:hover {
 }
 
 .button-like {
-
+  transition: .5s;
 }
 .button-like:hover {
   cursor: pointer;
@@ -40,10 +40,13 @@ button:hover {
 
 .link {
   transition: .5s;
+  color: grey;
 }
 
 .link:hover {
+  color: goldenrod;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .transition {

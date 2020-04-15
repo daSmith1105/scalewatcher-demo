@@ -6,6 +6,7 @@ import moment from 'moment';
 import '../../App.css'
 import { PictureAsPdf, MoreVert }  from '@material-ui/icons';
 import TicketTemplate from '../TicketTemplate';
+import TransactionPdf from '../TransactionPdf';
 import ActionsModal from './ActionsModal';
 
 const data =  transactions.map( t => (
@@ -49,7 +50,11 @@ class TableViewTable extends React.Component {
             checked: {},
             showTicket: false,
             showActionsModal: false,
-            currentTransaction: {}
+            currentTransaction: {},
+            fixedX: 0,
+            fixedY : 0,
+            showTransactionPdf: false,
+            currentTransactionPdf: {}
         }
 
         this.columns = [{
@@ -59,14 +64,15 @@ class TableViewTable extends React.Component {
             show: true,
             width: 40,
             headerClassName: "stickyTop",
-            Cell: (row) => <span><input type="checkbox" 
+            Cell: (row) => <span>
+                                <input type="checkbox" 
                                         value={ row.original.checked } 
-                                        checked={ row.original.checked }
                                         style={{ marginTop: -10 }}
                                         onClick={ () => {
                                             row.original.checked === false ? row.original.checked = true : row.original.checked = false;
                                             console.log(row.original.tId, row.original.checked)
-                                        }} /></span>
+                                        }} />
+                            </span>
         }, {
             Header: '',
             expander: true,
@@ -126,10 +132,10 @@ class TableViewTable extends React.Component {
             width: 70,
             filterable: false,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                                 onMouseEnter={ () => this.displayActionsModal(row.original) }>
-                                {/* onMouseLeave={ () => this.closeActionsModal() } */}
-                                <MoreVert style={{ fontSize: 16 }} />
+            Cell: (row) => <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                 {/* onClick={ () => this.displayActionsModal(row.original, this.props.x -176, this.props.y - 100) }> */}
+                                <PictureAsPdf   style={{ fontSize: 16 }} 
+                                                onClick={ () => this.displayTransactionPdf(row.original) } />
                                 </span>
           }];
         
@@ -166,6 +172,14 @@ class TableViewTable extends React.Component {
           }];
     }
 
+    componentDidMount = () => {
+        document.addEventListener('mousedown', this.handleClick, false);
+    }
+
+    componentWillUnmount = () => {
+        document.removeEventListener('mousedown', this.handleClick, false);
+    }
+
     handleRowExpanded( newExpanded, index, event ) {
         this.setState({
         // we override newExpanded, keeping only current selected row expanded
@@ -192,8 +206,21 @@ class TableViewTable extends React.Component {
         this.setState({ currentTicket: {}, showTicket: false });
     }
 
-    displayActionsModal = (transaction) => {
-        this.setState({ currentTransaction: transaction, showActionsModal: true });
+    displayTransactionPdf = (transaction) => {
+        // alert(JSON.stringify(transaction));
+        this.setState({ currentTransactionPdf: transaction, showTransactionPdf: true });
+    }
+    closeTransactionPdf = () => {
+        this.setState({ currentTransactionPdf: {}, showTransactionPdf: false });
+    }
+
+    displayActionsModal = (transaction, x, y) => {
+        this.setState({ 
+            currentTransaction: transaction, 
+            showActionsModal: true,
+            fixedX: x,
+            fixedY: y  
+        });
     }
 
     closeActionsModal = () => {
@@ -279,17 +306,28 @@ class TableViewTable extends React.Component {
                 />
 
                 { this.state.showTicket ? 
-                    <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', width: '100vw', zIndex: 1, backgroundColor: 'rgba(0,0,0,.6)' }}>
+                    <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', width: '100vw', zIndex: 12, backgroundColor: 'rgba(0,0,0,.6)' }}>
                         <TicketTemplate ticket={ this.state.currentTicket }
                                         closeTicketView={ this.closeTicketView } /> 
                     </div>:
                     null
                 }
 
+
+                { this.state.showTransactionPdf ? 
+                    <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', width: '100vw', zIndex: 1, backgroundColor: 'rgba(0,0,0,.6)' }}>
+                        <TransactionPdf transaction={ this.state.currentTransactionPdf }
+                                        closeTransactionPdf={ this.closeTransactionPdf }
+                                        displayTicket={ this.displayTicket } /> 
+                    </div>:
+                    null
+                }
+
                 { this.state.showActionsModal ? 
                     // need to get the row index so we can display this below the row and to the right
-                    <div style={{ position: 'fixed', top: 200, right: 20, zIndex: 1 }}>
-                        <ActionsModal transaction={ this.state.currentTransaction } /> 
+                    <div style={{ position: 'fixed', top: this.state.fixedY, left: this.state.fixedX, zIndex: 1 }}>
+                        <ActionsModal transaction={ this.state.currentTransaction }
+                                      closeActionsModal={ this.closeActionsModal } /> 
                     </div>:
                     null
                 }
