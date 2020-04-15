@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import frontImage from '../images/on.png';
 import sideImage from '../images/side.jpeg';
+import ticketImage from '../images/ticket_img.png';
 import '../App.css';
 import { SaveAlt, Close } from '@material-ui/icons';
 
@@ -48,14 +48,11 @@ const TicketTemplate = props => {
                     </Col>
                     <Col xs={10} md={6} style={{ marginTop: 10 }}>
                     {/* images here */}
-                        <img src={frontImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                        <img src={ticketImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />   
                     </Col>
                 </Row>
                 <Row center="xs" around="xs" style={{ padding: 10, marginTop: -10 }}>
-                    <Col xs={10} md={6} >
-                        <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
-                    </Col>
-                    <Col xs={10} md={6} >
+                    <Col xs={10}  md={6} mdOffset={6} >
                         <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
                     </Col>
                 </Row>

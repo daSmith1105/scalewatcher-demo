@@ -2,6 +2,10 @@ import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import frontImage from '../images/on.png';
 import sideImage from '../images/side.jpeg';
+import leavingImage from '../images/leaving.png';
+import leavingImage1 from '../images/leaving_1.png';
+import ticketImage from '../images/ticket_img.png';
+import lprImage from '../images/lpr_read.png';
 import '../App.css';
 import { SaveAlt, Close } from '@material-ui/icons';
 import { tickets } from './mockData';
@@ -25,19 +29,14 @@ const TransactionPdf = props => {
         switch (type) {
             case 'TruckOn':
                 return toTitleCase(data) + 'lb';
-                break
             case 'LprRead':
                 return data.toUpperCase();
-                break
             case 'TicketReceived':
                 return <span className="link" onClick={ () => props.displayTicket( tickets.filter( t => t.id.toString() === data.split(':')[1].trim() )) } style={{ textDecoration: 'underline', color: 'blue', fontWeight: 'bold' }}>Ticket: {data.split(':')[1].trim()}</span>
-                break
             case 'TruckLeaving':
                 return toTitleCase(data) + ' lb'
-                break
             case 'OverWeight':
                 return toTitleCase(data.split(',')[0]) + ' > ' + toTitleCase(data.split(',')[1])
-                break
             default:
                 return data
         }
@@ -79,19 +78,26 @@ const TransactionPdf = props => {
                     </Col>
                     <Col xs={10} md={6} style={{ textAlign: 'left', padding: 20 }} >
                     {/* images here */}
-                        <img src={frontImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5, marginBottom: 20 }} />
                         <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                        <img src={frontImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5, marginBottom: 20 }} />
                     </Col>
                 </Row>
                 <Row center="xs" around="xs">
                     <Col xs={10} md={6} style={{ textAlign: 'left', padding: 20 }}>
-                        <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                    <img src={ticketImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
                     </Col>
                     <Col xs={10} md={6} style={{ textAlign: 'left', padding: 20 }}>
-                        <img src={sideImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                        <img src={lprImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
                     </Col>
                 </Row>
-
+                <Row center="xs" around="xs">
+                    <Col xs={10} md={6} style={{ textAlign: 'left', padding: 20 }}>
+                        <img src={leavingImage1} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                    </Col>
+                    <Col xs={10} md={6} style={{ textAlign: 'left', padding: 20 }}>
+                        <img src={leavingImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
+                    </Col>
+                </Row>
                 <Close style={{ position: 'absolute', top: 10, right: 10, padding: 5, color: 'grey' }}
                                   onClick={ () => props.closeTransactionPdf() } />
                 <SaveAlt style={{ position: 'absolute', top: 60, right: 10, padding: 5, color: 'grey' }}

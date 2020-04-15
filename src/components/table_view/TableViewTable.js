@@ -4,7 +4,7 @@ import 'react-table-6/react-table.css'
 import { transactions, events, tickets } from '../mockData.js';
 import moment from 'moment';
 import '../../App.css'
-import { PictureAsPdf, MoreVert }  from '@material-ui/icons';
+import { PictureAsPdf }  from '@material-ui/icons';
 import TicketTemplate from '../TicketTemplate';
 import TransactionPdf from '../TransactionPdf';
 import ActionsModal from './ActionsModal';
