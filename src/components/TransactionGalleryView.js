@@ -6,7 +6,7 @@ import '../App.css';
 
 const TransactionGalleryView = props => {
     return (
-        <Col style={{ position: 'relative', textAlign: 'left', width: '90%', height: 500, backgroundColor: 'white', borderRadius: 10, padding: 5 }}>
+        <Col style={{ position: 'relative', textAlign: 'left', width: '90%', height: 'auto', backgroundColor: 'white', borderRadius: 10, padding: 5 }}>
             <h1 style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold' }}>Transaction Gallery View</h1>
             <p>id: {props.transaction.tId}</p>
             <p>lpn: {props.transaction.lpn}</p>
