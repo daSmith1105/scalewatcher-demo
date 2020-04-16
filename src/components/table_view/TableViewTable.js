@@ -107,16 +107,16 @@ class TableViewTable extends React.Component {
             headerClassName: "stickyTop",
             Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.duration} min</span>
         }, {
-
+            id: 'events_length',
             Header: 'events in transaction',
-            accessor: 'events',
+            accessor: r => r.events.length,
             show: true,
             headerClassName: "stickyTop",
             Cell: row => <span style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
         }, {
             id: 'ticket',
             Header: 'ticket',
-            accessor: t => t.events.filter(ev => ev.type === 'TicketReceived')[0] ? t.events.filter(ev => ev.type === 'TicketReceived')[0].data.split(':')[1] : '',
+            accessor: r => r.events.filter(ev => ev.type === 'TicketReceived')[0] ? r.events.filter(ev => ev.type === 'TicketReceived')[0].data.split(':')[1].trim() : null,
             show: true,
             headerClassName: "stickyTop",
             Cell: (row) => row.original.events.filter(ev => ev.type === 'TicketReceived')[0] ? 
