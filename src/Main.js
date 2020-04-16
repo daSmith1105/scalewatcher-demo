@@ -1,16 +1,20 @@
 import React from 'react';
 import TransactionBoardContainer from './components/transaction_board/TransactionBoardContainer';
+import SearchSliderContainer from './components/SearchSliderContainer';
 import TableViewContainer from './components/table_view/TableViewContainer';
+import { Search } from '@material-ui/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
 import tempImg from './todo.jpg';
+import './App.css';
 
 class Main extends React.Component {
   state = {
     x: 0,
     y: 0, 
     showTooltip: false,
-    currentTooltipEvent: {}
+    currentTooltipEvent: {},
+    showSearchSlider: false
   }
 
   // determine where the mouse is so we can render the tooltip correctly on transaction board
@@ -66,9 +70,25 @@ parseTooltipDataDisplay = event => {
     })
   }
 
+  closeSearchSlider = () => {
+    this.setState({ showSearchSlider: false })
+  }
+
   render() {
     return (
       <Col xs={12} onMouseMove={ this._onMouseMove } style={{ maxwidth: 900, margin: 'auto' }}>
+
+        { this.state.showSearchSlider ? 
+          <div style={{ zIndex: 10, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.6)' }}>
+            <div className="slide" style={{ width: '90%', maxWidth: 860, position: 'absolute', top: 54, right: 0 }}>
+              <SearchSliderContainer closeSearchSlider={ this.closeSearchSlider } />
+            </div>
+          </div> :
+          <div style={{ padding: 5, textAlign: 'center', position: 'absolute', top: 54, right: 0, height: 40, width: 40, backgroundColor: 'lightgrey', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, boxShadow: '5px 7px 5px rgba(0,0,0,.7)' }}
+               onClick={ () => this.setState({ showSearchSlider: true }) }>
+            <Search className="link" style={{ marginTop: 5, fontSize: 30, }} />
+          </div>
+        }
 
         { this.state.showTooltip ? 
           <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 10, position: 'absolute', top: this.state.y - 250,  left: this.state.x - (this.state.x / 16), height: 123, width: 'auto' }} >

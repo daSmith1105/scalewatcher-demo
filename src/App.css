@@ -53,6 +53,18 @@ button:hover {
   transition: .5s
 }
 
+.slide {
+  transition: 1s;
+}
+
+@-webkit-keyframes slide {
+  100% { right: 0; }
+}
+
+@keyframes slide {
+  100% { right: 0; }
+}
+
 .stickyTop {
   position: sticky !important;
   top: 0;

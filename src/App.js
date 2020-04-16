@@ -7,7 +7,7 @@ import { Grid } from 'react-flexbox-grid';
 class App extends React.Component {
 
   state = {
-    activeView: 'table'
+    activeView: 'transaction'
   }
 
   setActiveView = (view) => {
