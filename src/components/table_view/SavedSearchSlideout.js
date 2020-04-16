@@ -1,6 +1,6 @@
 import React from 'react';
 import { DoubleArrow } from '@material-ui/icons';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import '../../App.css';
 
 class SavedSearchSlideout extends React.Component {

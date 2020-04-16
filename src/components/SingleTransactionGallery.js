@@ -1,217 +1,173 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Row, Col } from 'react-flexbox-grid';
+import { ArrowForwardIos, ArrowBackIos } from '@material-ui/icons';
+import frontImage from '../images/on.png';
+import sideImage from '../images/side.jpeg';
+import leavingImage1 from '../images/leaving_1.png';
+import ticketImage from '../images/ticket_img.png';
+import lprImage from '../images/lpr_read.png';
+import placeholderImage from '../images/placeholder.jpg';
+import '../App.css';
+import moment from 'moment'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  backButton: {
-    marginRight: theme.spacing(1),
-  },
-  completed: {
-    display: 'inline-block',
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
+let steps = [];
 
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-}
+class SingleTransactionGallery extends React.Component {
+    constructor(props) {
+        super(props);
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Step 1: Select campaign settings...';
-    case 1:
-      return 'Step 2: What is an ad group anyways?';
-    case 2:
-      return 'Step 3: This is the bit I really care about!';
-    default:
-      return 'Unknown step';
-  }
-}
-
-export default function HorizontalNonLinearAlternativeLabelStepper(props) {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState(new Set());
-  const [skipped, setSkipped] = React.useState(new Set());
-  const steps = getSteps();
-
-  const totalSteps = () => {
-    return getSteps().length;
-  };
-
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
+        this.state = {
+            events: [],
+            currentIndex: 0,
+            ready: false
+        }
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const skippedSteps = () => {
-    return skipped.size;
-  };
-
-  const completedSteps = () => {
-    return completed.size;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps() - skippedSteps();
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.has(i))
-        : activeStep + 1;
-
-    setActiveStep(newActiveStep);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = new Set(completed);
-    newCompleted.add(activeStep);
-    setCompleted(newCompleted);
-
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
-    if (completed.size !== totalSteps() - skippedSteps()) {
-      handleNext();
+    componentDidMount = () => {
+        steps = [];
+        let cIndex = null;
+       
+        cIndex = this.props.events.map(function(e) { return e.type; }).indexOf('TicketReceived');
+        console.log(typeof cIndex)
+        if( cIndex < 0 ) {
+            cIndex = this.props.events.map(function(e) { return e.type; }).indexOf('NoTicket');
+        } 
+        if( cIndex < 0 ) {
+            cIndex = this.props.events.map(function(e) { return e.type; }).indexOf('OverWeight');
+        } 
+        if( cIndex < 0 ) {
+            cIndex = 0;
+       } 
+       
+        this.setState({ events: [], currentIndex: cIndex, ready: false }, 
+            () => {
+                this.props.events.forEach( ev => steps.push({type: ev.type, timestamp: ev.timestamp}) );
+                this.setState({ events: this.props.events },
+                    () => {
+                        setTimeout( this.setState({ ready: true }), 500 )
+                    })
+            })
     }
-  };
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted(new Set());
-    setSkipped(new Set());
-  };
+    parseType = event => {
+        const type = event.type
+        switch (type) {
+            case 'LprRead':
+                return lprImage; 
+            case 'TruckEntering':
+                return sideImage;
+            case 'TruckOn':
+                return frontImage;
+            case 'TruckLeaving':
+                return leavingImage1;
+            case 'TicketReceived':
+                return ticketImage;
+            case 'OverWeight':
+                return frontImage;
+            case 'NoTicket':
+                return frontImage;
+            case 'TareWeightContamination':
+                return frontImage;
+            default:
+                return placeholderImage;
+        }
+    };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
+    goNext = () => {
+        if( this.state.currentIndex < this.state.events.length - 1 ) {
+            this.setState({ currentIndex: this.state.currentIndex + 1 })
+        }
+    }
 
-  function isStepComplete(step) {
-    return completed.has(step);
-  }
+    goPrevious = () => {
+        if( this.state.currentIndex > 0 ) {
+            this.setState({ currentIndex: this.state.currentIndex - 1 })
+        }
+    }
 
-  return (
-    <div className={classes.root}>
+    render() {
+    
+        return (
+            <Col xs={12} style={{ position: 'relative' }} >
+                <Row center="xs" middle="xs">
+                    <Col xs={2}>
+                        { this.state.currentIndex > 0 ?
+                            <ArrowBackIos className="link" 
+                                        style={{ fontSize: '4vmin', marginLeft: '10vmin'}}
+                                        onClick={ () => this.goPrevious() } /> :
+                            null
+                        }
+                    </Col>
 
-        <p>{JSON.stringify(props.events)}</p>
+                    <Col xs={3} style={{ marginBottom: 20 }} >
+                        { this.state.ready ? 
+                            <div style={{ textAlign: 'left' }}>
+                                <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}><span style={{ fontWeight: 'bold' }}>Date:</span> { moment(this.state.events[this.state.currentIndex].timestamp).format('MM-DD-YYYY') }</p>
+                                <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}><span style={{ fontWeight: 'bold' }}>Time:</span> { moment(this.state.events[this.state.currentIndex].timestamp).format('hh:mm:ss a') }</p>
+                                <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}><span style={{ fontWeight: 'bold' }}>Type:</span> { this.state.events[this.state.currentIndex].type }</p>
+                                <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}><span style={{ fontWeight: 'bold' }}>Location:</span> { this.state.events[this.state.currentIndex].location }</p>
+                                { this.state.events[this.state.currentIndex].data.length > 0 ?
+                                    <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}><span style={{ fontWeight: 'bold' }}>Data:</span> { this.state.events[this.state.currentIndex].data}</p> :
+                                    null
+                                }
+                                {/* <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}>id: { this.state.events[this.state.currentIndex].eId }</p>
+                                <p style={{ margin: 2, padding: 0, fontSize: '2vmin', color: 'grey' }}>transaction: { this.state.events[this.state.currentIndex].tId }</p> */}
+                            </div> :
+                            null
+                        }
+                    </Col>
+                {/* Image */}
+                    <Col xs={5} style={{ marginBottom: 20 }}>
+                        { this.state.ready ? 
+                            <img src={this.parseType(this.state.events[this.state.currentIndex])} height='auto' width='100%' alt="" style={{ borderRadius: 5, boxShadow: '5px 5px 5px rgba(0,0,0,.4)' }} /> :
+                            null
+                        }
+                    </Col>
+                    <Col xs={2}>
+                        { this.state.currentIndex < this.state.events.length - 1 ?
+                            <ArrowForwardIos className="link" 
+                                            style={{ fontSize: '4vmin', marginRight: '10vmin' }}
+                                            onClick={ () => this.goNext() } /> :
+                            null
+                        }
+                    </Col>
+                </Row>
+                <Col xsOffset={1} xs={10} style={{ marginBottom: 20 }}>
+                    <Row around="xs">
+                        {  steps.map( (s, i) => (
+                                <div key={i} style={{ textAlign: 'center', zIndex: 2 }}>
+                                    <p  className="cursor-pointer"
+                                        style={{    textAlign: 'center', 
+                                                    width: 20, 
+                                                    margin: 'auto',  
+                                                    fontSize: '2vmin', 
+                                                    padding: 2, 
+                                                    borderRadius: '50vmin', 
+                                                    backgroundColor: this.state.currentIndex === i ? 'goldenrod' : 'grey',
+                                                    color: 'white',
+                                                    border: this.state.currentIndex === i ? '2px solid goldenrod' : '2px solid grey' }}
+                                        onClick={ () => this.setState({ currentIndex: i })}>
+                                        {i + 1}
+                                    </p>
+                                    <p  className="cursor-pointer"
+                                        style={{ fontSize: '2vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? 'goldenrod' : 'grey' }}>
+                                        {s.type}
+                                    </p>
+                                    <p  className="cursor-pointer"
+                                        style={{ fontSize: '1.6vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? 'goldenrod' : 'grey' }}>
+                                        {moment(s.timestamp).format('hh:mm:ss a')}
+                                    </p>
+                                </div>
+                            )
+                        )}
+                    </Row>
+                </Col>
 
-      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const buttonProps = {};
-          if (isStepOptional(index)) {
-            buttonProps.optional = <Typography variant="caption">Optional</Typography>;
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepButton
-                onClick={handleStep(index)}
-                completed={isStepComplete(index)}
-                {...buttonProps}
-              >
-                {label}
-              </StepButton>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {allStepsCompleted() ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button>
-              {isStepOptional(activeStep) && !completed.has(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
-
-              {activeStep !== steps.length &&
-                (completed.has(activeStep) ? (
-                  <Typography variant="caption" className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button variant="contained" color="primary" onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                  </Button>
-                ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+                <Col xsOffset={2} xs={8} style={{ position: 'absolute', bottom: '6vmin', left: 0, height: '.5vmin', backgroundColor: 'goldenrod', width: '100%' }}>
+                </Col>
+            </Col>
+        )
+    }
 }
+
+export default SingleTransactionGallery;

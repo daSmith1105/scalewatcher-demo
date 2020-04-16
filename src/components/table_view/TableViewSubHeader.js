@@ -1,6 +1,6 @@
 import React from 'react';
 import SavedSearchSlideout from './SavedSearchSlideout';
-import { Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 
 const TableViewSubHeader= props => {
   return (

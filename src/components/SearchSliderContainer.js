@@ -1,5 +1,5 @@
 import React from 'react';
-import { SaveAlt, Close } from '@material-ui/icons';
+import { Close } from '@material-ui/icons';
 import '../App.css';
 
 const SearchSliderContainer = props => {
