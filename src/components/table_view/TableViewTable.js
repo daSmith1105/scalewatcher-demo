@@ -230,10 +230,10 @@ class TableViewTable extends React.Component {
     render() {
 
         return(
-            <div style={{ height: window.innerHeight - 300, width: '100%' }}>
+            <div style={{ height: window.innerHeight - 360, width: '100%' }}>
 
                 <ReactTable
-                    style={{ height: window.innerHeight - 300, fontSize: 12, color: 'grey', fontWeight: 'bold' }}
+                    style={{ height: window.innerHeight - 360, fontSize: 12, color: 'grey', fontWeight: 'bold' }}
                     className='-striped -highlight rTableView1'
                     data={data}
                     columns={this.columns}
