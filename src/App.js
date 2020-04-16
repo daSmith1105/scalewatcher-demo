@@ -17,8 +17,8 @@ class App extends React.Component {
   render() {
     return (
       <Grid fluid >
-        <Header activeView={ this.state.activeView } setActiveView={ this.setActiveView }/>
-          <Main activeView={ this.state.activeView } />
+        <Header activeView={ this.state.activeView } setActiveView={ this.setActiveView } />
+          <Main activeView={ this.state.activeView } setActiveView={ this.setActiveView } />
       </Grid>
     );
   }

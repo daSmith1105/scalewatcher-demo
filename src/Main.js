@@ -2,6 +2,7 @@ import React from 'react';
 import TransactionBoardContainer from './components/transaction_board/TransactionBoardContainer';
 import SearchSliderContainer from './components/SearchSliderContainer';
 import TableViewContainer from './components/table_view/TableViewContainer';
+import TransactionGalleryView from './components/TransactionGalleryView';
 import { Search } from '@material-ui/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
@@ -14,7 +15,9 @@ class Main extends React.Component {
     y: 0, 
     showTooltip: false,
     currentTooltipEvent: {},
-    showSearchSlider: false
+    showSearchSlider: false,
+    showTransactionGalleryView: true,
+    currentGalleryTransaction: {}
   }
 
   // determine where the mouse is so we can render the tooltip correctly on transaction board
@@ -74,12 +77,20 @@ parseTooltipDataDisplay = event => {
     this.setState({ showSearchSlider: false })
   }
 
+  displayTransactionGalleryView = (transaction) => {
+    this.setState({ currentGalleryTransaction: transaction, showTransactionGalleryView: true });
+  }
+
+  closeTransactionGalleryView = (transaction) => {
+    this.setState({ currentGalleryTransaction: {}, showTransactionGalleryView: false })
+  }
+
   render() {
     return (
       <Col xs={12} onMouseMove={ this._onMouseMove } style={{ maxwidth: 900, margin: 'auto' }}>
 
         { this.state.showSearchSlider ? 
-          <div style={{ zIndex: 10, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.6)' }}>
+          <div style={{ zIndex: 5, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.6)' }}>
             <div className="slide" style={{ width: '90%', maxWidth: 860, position: 'absolute', top: 54, right: 0 }}>
               <SearchSliderContainer closeSearchSlider={ this.closeSearchSlider } />
             </div>
@@ -88,6 +99,14 @@ parseTooltipDataDisplay = event => {
                onClick={ () => this.setState({ showSearchSlider: true }) }>
             <Search className="link" style={{ marginTop: 5, fontSize: 30, }} />
           </div>
+        }
+
+        { this.state.showTransactionGalleryView ? 
+                <Row middle="xs" center="xs" style={{  position: 'absolute', top: 0, left: 8, zIndex: 6, height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.6)' }} >
+                  <TransactionGalleryView transaction={ this.state.currentGalleryTransaction } closeTransactionGalleryView={ this.closeTransactionGalleryView } />
+                </Row>
+              :
+            null
         }
 
         { this.state.showTooltip ? 
@@ -125,7 +144,7 @@ parseTooltipDataDisplay = event => {
         { this.props.activeView === 'transaction' ? 
           <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
             <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-              <TransactionBoardContainer toggleTooltip={ this.toggleTooltip } />
+              <TransactionBoardContainer displayTransactionGalleryView={ this.displayTransactionGalleryView } toggleTooltip={ this.toggleTooltip } setActiveView={ this.props.setActiveView } />
             </Col>
           </Row> :
           null
@@ -134,7 +153,7 @@ parseTooltipDataDisplay = event => {
         { this.props.activeView === 'table' ? 
                   <Row center="xs" className="transition" style={{ position: 'fixed', top: 120, left: 0, right: 0 }} >
                     <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                      <TableViewContainer x={ this.state.x} y={ this.state.y } />
+                      <TableViewContainer x={ this.state.x} y={ this.state.y } displayTransactionGalleryView={ this.displayTransactionGalleryView } />
                     </Col>
                   </Row> :
                   null

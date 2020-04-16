@@ -9,7 +9,7 @@ const TableViewContainer = props => {
     <Col xs={12} s={12} md={12} lg={12} style={{ border: '2px solid grey', padding: 20, borderRadius: 10 }} >
         <TableViewHeader />
         <TableViewSubHeader />
-        <TableViewTable x={ props.x } y={ props.y } />
+        <TableViewTable x={ props.x } y={ props.y } displayTransactionGalleryView={ props.displayTransactionGalleryView } />
     </Col>
   );
 }

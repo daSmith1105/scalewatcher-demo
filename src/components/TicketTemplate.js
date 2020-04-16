@@ -3,7 +3,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import sideImage from '../images/side.jpeg';
 import ticketImage from '../images/ticket_img.png';
 import '../App.css';
-import { SaveAlt, Close } from '@material-ui/icons';
+import { SaveAlt, Close, Email } from '@material-ui/icons';
 import moment from 'moment';
 
 const TicketTemplate = props => {
@@ -11,6 +11,10 @@ const TicketTemplate = props => {
 
     const savePdf = () => {
         alert('Will save as pdf')
+    }
+
+    const emailPdf = () => {
+        alert('Will open email dialog with pdf attached')
     }
 
     return (
@@ -43,10 +47,15 @@ const TicketTemplate = props => {
                     </Col>
                 </Row>
 
-                <Close style={{ position: 'absolute', top: 10, right: 10, padding: 5, color: 'grey' }}
-                                  onClick={ () => props.closeTicketView() } />
-                <SaveAlt style={{ position: 'absolute', top: 60, right: 10, padding: 5, color: 'grey' }}
-                                  onClick={ () => savePdf() } />
+                <Close className="link"
+                       style={{ position: 'absolute', top: 10, right: 10, padding: 5 }}
+                       onClick={ () => props.closeTicketView() } />
+                <SaveAlt className="link"
+                         style={{ position: 'absolute', top: 60, right: 10, padding: 5 }}
+                         onClick={ () => savePdf() } />
+                <Email  className="link"
+                        style={{ position: 'absolute', top: 110, right: 10, padding: 5 }}
+                        onClick={ () => emailPdf() } />
             </div>
         </Col>
     )

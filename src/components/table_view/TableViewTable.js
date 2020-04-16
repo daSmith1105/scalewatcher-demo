@@ -80,39 +80,39 @@ class TableViewTable extends React.Component {
             show: true,
             filteable: false,
             sortable: true,
-            headerClassName: "stickyTop",
+            headerClassName: "stickyTop"
         }, {
             Header: 'id',
             accessor: 'tId',
             show: true,
             width: 40,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
+            Cell: (row) => <span onClick={ () => this.props.displayTransactionGalleryView(row.original)} style={{ padding: 0, margin: 0 }}>{row.original.tId}</span>
         }, {
             Header: 'lpn',
             accessor:'lpn',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.lpn}</span>
+            Cell: (row) => <span onClick={ () => this.props.displayTransactionGalleryView(row.original)} style={{ padding: 0, margin: 0 }}>{row.original.lpn}</span>
         }, {
             Header: 'start',
             accessor: 'start',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.start).format('MM-DD-YYYY   hh:mm:ss a')}</span>
+            Cell: (row) => <span onClick={ () => this.props.displayTransactionGalleryView(row.original)} style={{ padding: 0, margin: 0 }}>{moment(row.original.start).format('MM-DD-YYYY   hh:mm:ss a')}</span>
         }, {
             Header: 'duration',
             accessor: 'duration',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.duration} min</span>
+            Cell: (row) => <span onClick={ () => this.props.displayTransactionGalleryView(row.original)} style={{ padding: 0, margin: 0 }}>{row.original.duration} min</span>
         }, {
             id: 'events_length',
             Header: 'events in transaction',
             accessor: r => r.events.length,
             show: true,
             headerClassName: "stickyTop",
-            Cell: row => <span style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
+            Cell: row => <span onClick={ () => this.props.displayTransactionGalleryView(row.original)} style={{ padding: 0, margin: 0 }}>{row.original.events.length}</span> 
         }, {
             id: 'ticket',
             Header: 'ticket',
@@ -259,14 +259,14 @@ class TableViewTable extends React.Component {
                                                                             {   height: 26,
                                                                                 margin: 0, 
                                                                                 padding: 0,
-                                                                            }
+                                                                            },
                                                                         };
                                                           
                         } else {
-                            return { style: {   height: 26,
+                            return {    style: {   height: 26,
                                                 margin: 0, 
                                                 padding: 0,
-                                             } 
+                                             },
                                     };
                         }
                     }}

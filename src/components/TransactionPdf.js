@@ -7,7 +7,7 @@ import leavingImage1 from '../images/leaving_1.png';
 import ticketImage from '../images/ticket_img.png';
 import lprImage from '../images/lpr_read.png';
 import '../App.css';
-import { SaveAlt, Close } from '@material-ui/icons';
+import { SaveAlt, Close, Email } from '@material-ui/icons';
 import { tickets } from './mockData';
 import moment from 'moment';
 
@@ -16,6 +16,10 @@ const TransactionPdf = props => {
 
     const savePdf = () => {
         alert('Will save as pdf')
+    }
+
+    const emailPdf = () => {
+        alert('Will open email dialog with pdf attached')
     }
 
    const toTitleCase = function (str) {
@@ -99,10 +103,15 @@ const TransactionPdf = props => {
                         <img src={leavingImage} alt="" height={'auto'} width={'80%'} style={{ borderRadius: 5 }} />
                     </Col>
                 </Row>
-                <Close style={{ position: 'absolute', top: 10, right: 10, padding: 5, color: 'grey' }}
-                                  onClick={ () => props.closeTransactionPdf() } />
-                <SaveAlt style={{ position: 'absolute', top: 60, right: 10, padding: 5, color: 'grey' }}
-                                  onClick={ () => savePdf() } />
+                <Close className="link" 
+                       style={{ position: 'absolute', top: 10, right: 10, padding: 5 }}
+                       onClick={ () => props.closeTransactionPdf() } />
+                <SaveAlt className="link"
+                         style={{ position: 'absolute', top: 60, right: 10, padding: 5 }}
+                         onClick={ () => savePdf() } />
+                <Email  className="link"
+                        style={{ position: 'absolute', top: 110, right: 10, padding: 5 }}
+                        onClick={ () => emailPdf() } />
             </div>
         </Col>
     )

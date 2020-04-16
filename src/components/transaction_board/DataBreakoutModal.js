@@ -34,6 +34,8 @@ const DataBreakoutModal = props => {
                 return placeholderImage
         }
     };
+
+    console.log(props)
   
     return (
         <div style={{ padding: 30, backgroundColor: 'white', width: 540, height: 240, margin: 'auto', borderRadius: 5, marginTop: 100, position: 'relative', boxShadow: '5px 10px 18px black' }}>
@@ -55,6 +57,17 @@ const DataBreakoutModal = props => {
                 </Col>
             </Row>
             
+            <p className="link" 
+                style={{ position: 'absolute', top: 0, right: 160, padding: 5, fontSize: 14 }}
+                // this needs to open the current transaction in table view as well, already changes the view to table
+                onClick={ () => { props.setActiveView('table'); props.closeBreakoutModal() }} >
+                table view
+            </p>
+            <p className="link" 
+                style={{ position: 'absolute', top: 0, right: 60, padding: 5, fontSize: 14 }}
+                onClick={ () => { props.displayTransactionGalleryView(props.transaction); props.closeBreakoutModal() }} >
+                gallery view
+            </p>
             <Close className="link" style={{ position: 'absolute', top: 10, right: 10, padding: 5 }}
                                     onClick={ () => props.closeBreakoutModal() } />
         </div>

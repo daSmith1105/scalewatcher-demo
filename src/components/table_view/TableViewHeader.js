@@ -19,8 +19,7 @@ const TableViewHeader= props => {
         <Row center="xs" around="xs">
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDateTimePicker
-                    style={{ maxWidth: 140, color: 'grey' }}
-                    color={'grey'}
+                    style={{ maxWidth: 140 }}
                     //   disableToolbar
                     variant="inline"
                     autoOk={true}
