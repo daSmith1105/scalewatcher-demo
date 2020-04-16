@@ -9,6 +9,7 @@ import lprImage from '../images/lpr_read.png';
 import '../App.css';
 import { SaveAlt, Close } from '@material-ui/icons';
 import { tickets } from './mockData';
+import moment from 'moment';
 
 const TransactionPdf = props => {
      const { tId, lpn, start, end, duration, events } = props.transaction;
@@ -51,13 +52,13 @@ const TransactionPdf = props => {
                             Transaction Id: {tId}
                         </p>
                         <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}>
-                            <span style={{ fontWeight: 'bold' }}>Start:</span> {start}
+                            <span style={{ fontWeight: 'bold' }}>Start:</span> {moment(start).format('MM-DD-YYYY   hh:mm:ss a')}
                         </p>
                         <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}>
-                            <span style={{ fontWeight: 'bold' }}>End:</span>  {end}
+                            <span style={{ fontWeight: 'bold' }}>End:</span>  {moment(end).format('MM-DD-YYYY   hh:mm:ss a')}
                         </p>
                         <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}>
-                            <span style={{ fontWeight: 'bold' }}>Duration:</span>  {duration}
+                            <span style={{ fontWeight: 'bold' }}>Duration:</span>  {duration} min
                         </p>
                         <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}>
                             <span style={{ fontWeight: 'bold' }}>Lpn:</span>  {lpn}
@@ -66,7 +67,7 @@ const TransactionPdf = props => {
                         <div style={{ marginLeft: 5 }}>
                             { events.map( (ev, i) => (
                                 <div key={ev.eId}>                           
-                                    <p  style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>{i + 1} ) </span><span style={{ marginRight: 8, fontWeight: 'bold' }}> {ev.type}</span>  {ev.timestamp}</p>
+                                    <p  style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 40 }}><span style={{ fontWeight: 'bold' }}>{i + 1} ) </span><span style={{ marginRight: 8, fontWeight: 'bold' }}> {ev.type}</span>  {moment(ev.timestamp).format('MM-DD-YYYY   hh:mm:ss a')}</p>
                                     <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 60 }}><span style={{ fontWeight: 'bold' }}>location:</span>  {ev.location}</p>
                                     {ev.data !== '' ?
                                         <p style={{ padding: 0, fontSize: '1.5vmin', color: 'grey', margin: 2, marginLeft: 60 }}><span style={{ fontWeight: 'bold' }}>data:</span> {transformData(ev.type,ev.data)}</p> :

@@ -71,7 +71,7 @@ parseTooltipDataDisplay = event => {
       <Col xs={12} onMouseMove={ this._onMouseMove } style={{ maxwidth: 900, margin: 'auto' }}>
 
         { this.state.showTooltip ? 
-          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 10, position: 'absolute', top: this.state.y - 240,  left: this.state.x - (this.state.x / 16), height: 123, width: 'auto' }} >
+          <div className="speech-bubble" style={{ textAlign: 'left', zIndex: 10, position: 'absolute', top: this.state.y - 250,  left: this.state.x - (this.state.x / 16), height: 123, width: 'auto' }} >
             <div style={{ width: 'auto', 
                           backgroundColor: this.parseTooltipHeaderColor(this.state.currentTooltipEvent.type), 
                           borderTopLeftRadius: 5,

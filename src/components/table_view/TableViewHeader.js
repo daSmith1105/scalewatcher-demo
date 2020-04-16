@@ -6,20 +6,21 @@ import MomentUtils from '@date-io/moment';
 const TableViewHeader= props => {
 
   return (
-    <Row center="xs" around="xs" >
+    <Row start="xs" >
 
-      <Col xs={4}>
+      <Col xs={6}>
         <Row start="xs">
-          <h1 style={{ color: 'goldenrod', padding: 0, margin: 0, marginLeft: 20 }}>Table View</h1> 
+          <h1 style={{ color: 'goldenrod', padding: 0, margin: 0, textAlign: 'left', marginLeft: 20 }}>Table View</h1> 
         </Row>
       </Col>
 
       {/* date picker */}
-      <Col xs={4}>
-        <Row middle="xs">
+      <Col xs={6}>
+        <Row center="xs" around="xs">
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDateTimePicker
-                    style={{ maxWidth: 140, fontSize: 10 }}
+                    style={{ maxWidth: 140, color: 'grey' }}
+                    color={'grey'}
                     //   disableToolbar
                     variant="inline"
                     autoOk={true}
@@ -33,9 +34,9 @@ const TableViewHeader= props => {
                     }}
                     />
             </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={MomentUtils} style={{fontSize: 10}}>
+            <MuiPickersUtilsProvider utils={MomentUtils} >
                 <KeyboardDateTimePicker
-                    style={{ maxWidth: 140, marginLeft: 20, fontSize: 10  }}
+                    style={{ maxWidth: 140, marginLeft: 20  }}
                     //   disableToolbar
                     variant="inline"
                     autoOk={true}

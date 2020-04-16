@@ -99,7 +99,7 @@ class TableViewTable extends React.Component {
             accessor: 'start',
             show: true,
             headerClassName: "stickyTop",
-            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{row.original.start}</span>
+            Cell: (row) => <span style={{ padding: 0, margin: 0 }}>{moment(row.original.start).format('MM-DD-YYYY   hh:mm:ss a')}</span>
         }, {
             Header: 'duration',
             accessor: 'duration',

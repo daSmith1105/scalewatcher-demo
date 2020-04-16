@@ -48,6 +48,10 @@ class TransactionBoardTable extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            test: ''
+        }
+
         this.columns = [{
             Header: <span style={{ fontSize: 12, marginRight: 40, marginTop: 5, color: 'grey'}}>Lpn / Id</span>,
             accessor: 'lpn',
@@ -1839,7 +1843,7 @@ class TransactionBoardTable extends React.Component {
                                                         returnValue = <Brightness1Icon  className="event-icon" 
                                                                                     style={{ height: '100%', fontSize: 12, color: 'green' }}
                                                                                     key={ event.eId}
-                                                                                    onClick={ () => this.showEventModal(event) }
+                                                                                    onClick={ () => this.props.showBreakoutModal(event) }
                                                                                     onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
                                                                                     onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'LprRead' || event.type === 'TruckEntering' || event.type === 'TruckOn' || event.type === 'TruckLeaving' ) {
@@ -1847,7 +1851,7 @@ class TransactionBoardTable extends React.Component {
                                                         returnValue = <PlayArrowIcon  className="event-icon" 
                                                                                     style={{ height: '100%', fontSize: 16, color: 'red' }}
                                                                                     key={ event.eId}
-                                                                                    onClick={ () => this.showEventModal(event) }
+                                                                                    onClick={ () => this.props.showBreakoutModal(event) }
                                                                                     onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
                                                                                     onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'TicketReceived' ) {
@@ -1855,7 +1859,7 @@ class TransactionBoardTable extends React.Component {
                                                         returnValue = <StopIcon  className="event-icon"
                                                                                         style={{ height: '100%', fontSize: 16, color: 'black' }}
                                                                                         key={ event.eId}
-                                                                                        onClick={ () => this.showEventModal(event) }
+                                                                                        onClick={ () => this.props.showBreakoutModal(event) }
                                                                                         onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
                                                                                         onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'ValveOpened' || event.type ==='ValveClosed' ) {
@@ -1863,7 +1867,7 @@ class TransactionBoardTable extends React.Component {
                                                         returnValue = <GradeIcon className="event-icon"
                                                                             style={{ height: '100%', fontSize: 12, color: 'blue' }}
                                                                             key={ event.eId}
-                                                                            onClick={ () => this.showEventModal(event) }
+                                                                            onClick={ () => this.props.showBreakoutModal(event) }
                                                                             onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
                                                                             onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else if ( event.type === 'NoTicket' || event.type === 'ValveAlert' || event.type === 'OverWeight' || event.type === 'TareWeightContamination' ) {
@@ -1871,7 +1875,7 @@ class TransactionBoardTable extends React.Component {
                                                         returnValue = <WarningIcon className="event-icon"
                                                                                     style={{ height: '100%', fontSize: 12, color: 'orange' }}
                                                                                     key={ event.eId}
-                                                                                    onClick={ () => this.showEventModal(event) }
+                                                                                    onClick={ () => this.props.showBreakoutModal(event) }
                                                                                     onMouseEnter={ () => this.props.toggleTooltip( true, event ) }
                                                                                     onMouseLeave={ () => this.props.toggleTooltip( false, {} ) } />
                                                      } else {
