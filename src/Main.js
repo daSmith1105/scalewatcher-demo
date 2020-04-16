@@ -16,7 +16,7 @@ class Main extends React.Component {
     showTooltip: false,
     currentTooltipEvent: {},
     showSearchSlider: false,
-    showTransactionGalleryView: true,
+    showTransactionGalleryView: false,
     currentGalleryTransaction: {}
   }
 
