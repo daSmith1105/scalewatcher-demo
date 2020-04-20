@@ -2,12 +2,13 @@ import React from 'react';
 import TransactionBoardContainer from './components/transaction_board/TransactionBoardContainer';
 import SearchSliderContainer from './components/SearchSliderContainer';
 import TableViewContainer from './components/table_view/TableViewContainer';
-import TransactionGalleryView from './components/TransactionGalleryView';
+import TransactionGalleryView from './components/transaction_gallery/TransactionGalleryView';
 import { Search } from '@material-ui/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
 import tempImg from './todo.jpg';
 import './App.css';
+import ChartWidget from './components/charts/ChartWidget';
 
 class Main extends React.Component {
   state = {
@@ -17,7 +18,9 @@ class Main extends React.Component {
     currentTooltipEvent: {},
     showSearchSlider: false,
     showTransactionGalleryView: false,
-    currentGalleryTransaction: {}
+    currentGalleryTransaction: {},
+    activeCharts: [],
+    currentActiveChart: ''
   }
 
   // determine where the mouse is so we can render the tooltip correctly on transaction board
@@ -85,14 +88,39 @@ parseTooltipDataDisplay = event => {
     this.setState({ currentGalleryTransaction: {}, showTransactionGalleryView: false })
   }
 
+  addActiveChart = (type) => {
+    let aCharts = this.state.activeCharts.length > 0 ? [...this.state.activeCharts] : [];
+    if ( aCharts.indexOf(type) < 0 ) {
+      aCharts.push(type);
+      this.setState({ currentActiveChart: type })
+    };
+    this.setState({ activeCharts: aCharts });
+  }
+
+  removeActiveChart = (type) => {
+    let aCharts = this.state.activeCharts.length > 0 ? [...this.state.activeCharts] : [];
+    let targetIndex = aCharts.indexOf(type);
+    if ( targetIndex >= 0 ) {
+      aCharts.splice(targetIndex, 1);
+      if( this.state.currentActiveChart === type ) {
+        this.setState({ currentActiveChart: '' })
+      }
+    };
+    this.setState({ activeCharts: aCharts });
+  }
+
+  setCurrentActiveChart = (chart) => {
+    // set the current active chart so we can adjust zIndex if they are overlapping
+   this.setState({ currentActiveChart: chart });
+  }
+
   render() {
     return (
       <Col xs={12} onMouseMove={ this._onMouseMove } style={{ maxwidth: 900, margin: 'auto' }}>
-
         { this.state.showSearchSlider ? 
           <div style={{ zIndex: 5, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.6)' }}>
             <div className="slide" style={{ width: '90%', maxWidth: 860, position: 'absolute', top: 54, right: 0 }}>
-              <SearchSliderContainer closeSearchSlider={ this.closeSearchSlider } />
+              <SearchSliderContainer closeSearchSlider={ this.closeSearchSlider } addActiveChart={ this.addActiveChart } />
             </div>
           </div> :
           <div style={{ padding: 5, textAlign: 'center', position: 'absolute', top: 54, right: 0, height: 40, width: 40, backgroundColor: 'lightgrey', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, boxShadow: '5px 7px 5px rgba(0,0,0,.7)' }}
@@ -168,10 +196,20 @@ parseTooltipDataDisplay = event => {
                   </Row> :
                   null
                 }
-          
-              </Col>
-            );
-          }
+        { this.state.activeCharts.length > 0 ? 
+            this.state.activeCharts.map( c => (
+              <ChartWidget  key={c} 
+                            type={c} 
+                            activeCharts={ this.state.activeCharts } 
+                            removeActiveChart={ this.removeActiveChart } 
+                            setCurrentActiveChart={ this.setCurrentActiveChart }
+                            currentActiveChart={ this.state.currentActiveChart } /> 
+            )) :
+            null
+        }  
+      </Col>
+    );
+  }
 }
 
 export default Main;

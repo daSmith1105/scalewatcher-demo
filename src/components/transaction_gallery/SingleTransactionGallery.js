@@ -1,13 +1,13 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import { ArrowForwardIos, ArrowBackIos } from '@material-ui/icons';
-import frontImage from '../images/on.png';
-import sideImage from '../images/side.jpeg';
-import leavingImage1 from '../images/leaving_1.png';
-import ticketImage from '../images/ticket_img.png';
-import lprImage from '../images/lpr_read.png';
-import placeholderImage from '../images/placeholder.jpg';
-import '../App.css';
+import frontImage from '../../images/on.png';
+import sideImage from '../../images/side.jpeg';
+import leavingImage1 from '../../images/leaving_1.png';
+import ticketImage from '../../images/ticket_img.png';
+import lprImage from '../../images/lpr_read.png';
+import placeholderImage from '../../images/placeholder.jpg';
+import '../../App.css';
 import moment from 'moment'
 
 let steps = [];

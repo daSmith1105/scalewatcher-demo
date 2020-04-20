@@ -1,10 +1,11 @@
 import React from 'react';
+import { Row, Col } from 'react-flexbox-grid';
 import { Close } from '@material-ui/icons';
 import '../App.css';
 
 const SearchSliderContainer = props => {
     return (
-        <div className="slide" style={{ padding: 5, position: 'relative', width: '100%', height: 'calc(100vh - 66px)', overflow: 'scroll', backgroundColor: 'white', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, textAlign: 'center', boxShadow: '10px 10px 10px 10px black' }}>
+        <Col xs={12} className="slide" style={{ padding: 5, position: 'relative', width: '100%', height: 'calc(100vh - 66px)', overflow: 'scroll', backgroundColor: 'white', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, textAlign: 'center', boxShadow: '10px 10px 10px 10px black' }}>
             <p style={{fontSize: 20}}>Search Builder</p>
             <div style={{ textAlign: 'left', marginLeft: 20 }}>
                 <p style={styles.textStyle}><span style={styles.bold}>Date: </span> equal to, greater than, less than, between</p>
@@ -35,10 +36,31 @@ const SearchSliderContainer = props => {
                 <p style={styles.bold}>everyone can run the same searches and in addition have the ability to create their custom searches based of uploaded template or drill down</p>
 
             </div>
+            <hr />
+            <Row center="xs" middle="xs">
+                <p style={{ fontSize: '2.2vmin', color: 'grey', textDecoration: 'underline' }}> View Charts: </p>
+                <p  className="link" 
+                    style={{ fontSize: '2vmin', marginLeft: 20 }}
+                    onClick={ () => props.addActiveChart('pie') }>
+                    Pie Chart
+                </p>
+                <p style={{ fontSize: '2vmin', marginLeft: 20, marginRight: 20 }}>|</p>
+                <p  className="link" 
+                    style={{ fontSize: '2vmin', marginLeft: 20 }}
+                    onClick={ () => props.addActiveChart('bar') }>
+                    Bar Chart
+                </p>
+                <p style={{ fontSize: '2vmin', marginLeft: 20, marginRight: 20 }}>|</p>
+                <p className="link" 
+                    style={{ fontSize: '2vmin', marginLeft: 20 }}
+                    onClick={ () => props.addActiveChart('line') }>
+                    Line Chart
+                </p>
+            </Row>
             <Close  className="link"
                     style={{ position: 'absolute', top: 10, right: 10, padding: 5 }}
                     onClick={ () => props.closeSearchSlider() } />
-        </div>
+        </Col>
     )
 }
 

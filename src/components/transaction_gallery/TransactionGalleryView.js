@@ -2,7 +2,7 @@ import React from 'react';
 import SingleTransactionGallery from './SingleTransactionGallery';
 import { Close } from '@material-ui/icons';
 import { Row, Col } from 'react-flexbox-grid';
-import '../App.css';
+import '../../App.css';
 import moment from 'moment';
 
 const TransactionGalleryView = (props) => {
