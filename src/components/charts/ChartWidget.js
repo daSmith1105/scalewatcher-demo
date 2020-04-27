@@ -112,7 +112,7 @@ class ChartWidget extends React.Component {
                             { this.props.type === 'line' ? 
                                 'Transaction cycle time' :
                             this.props.type === 'bar' ?
-                                'BarChart' :
+                                'Transaction Totals' :
                             this.props.type === 'pie' ? 
                                 'Events By Type':
                                 'Unknown Chart'
@@ -120,11 +120,11 @@ class ChartWidget extends React.Component {
                         </p>
                         <p style={{ color: 'white', fontWeight: 'bold', fontSize: '1.7vmin' }}>
                             { this.props.type === 'line' ? 
-                                `${transactions.length} Transactions Total` :
+                                `${transactions.length} Transactions` :
                             this.props.type === 'bar' ?
-                                'BarChart' :
+                                `` :
                             this.props.type === 'pie' ? 
-                                `${events.length} Events Total`:
+                                `${events.length} Events`:
                                 'Unknown Chart'
                             }
                         </p>

@@ -37,24 +37,24 @@ const SearchSliderContainer = props => {
 
             </div>
             <hr />
+            <p style={{ textAlign: 'left', marginLeft: 20, fontSize: '2.2vmin', color: 'grey', textDecoration: 'underline' }}> View Charts: </p>
             <Row center="xs" middle="xs">
-                <p style={{ fontSize: '2.2vmin', color: 'grey', textDecoration: 'underline' }}> View Charts: </p>
                 <p  className="link" 
                     style={{ fontSize: '2vmin', marginLeft: 20 }}
                     onClick={ () => props.addActiveChart('pie') }>
-                    Event breakdown by type
+                    Breakdown By Type
                 </p>
                 <p style={{ fontSize: '2vmin', marginLeft: 20, marginRight: 20 }}>|</p>
                 <p  className="link" 
                     style={{ fontSize: '2vmin', marginLeft: 20 }}
                     onClick={ () => props.addActiveChart('bar') }>
-                    Bar Chart
+                    Transaction Totals
                 </p>
                 <p style={{ fontSize: '2vmin', marginLeft: 20, marginRight: 20 }}>|</p>
                 <p className="link" 
                     style={{ fontSize: '2vmin', marginLeft: 20 }}
                     onClick={ () => props.addActiveChart('line') }>
-                    Transaction cycle time
+                    Transaction Cycle Times
                 </p>
             </Row>
             <Close  className="link"
