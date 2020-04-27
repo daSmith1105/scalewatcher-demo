@@ -31,7 +31,7 @@ const SearchSliderContainer = props => {
                 <p style={styles.textStyle}></p>
                 <hr/>
                 <p></p>
-                <p style={styles.bold} >will have tha ability to save and reuse searches</p>
+                <p style={styles.bold} >will have the ability to save and reuse searches</p>
                 <p style={styles.bold}>custom searches can be downloaded as a file and then imported for other to use</p>
                 <p style={styles.bold}>everyone can run the same searches and in addition have the ability to create their custom searches based of uploaded template or drill down</p>
 
@@ -42,7 +42,7 @@ const SearchSliderContainer = props => {
                 <p  className="link" 
                     style={{ fontSize: '2vmin', marginLeft: 20 }}
                     onClick={ () => props.addActiveChart('pie') }>
-                    Pie Chart
+                    Event breakdown by type
                 </p>
                 <p style={{ fontSize: '2vmin', marginLeft: 20, marginRight: 20 }}>|</p>
                 <p  className="link" 
@@ -54,7 +54,7 @@ const SearchSliderContainer = props => {
                 <p className="link" 
                     style={{ fontSize: '2vmin', marginLeft: 20 }}
                     onClick={ () => props.addActiveChart('line') }>
-                    Line Chart
+                    Transaction cycle time
                 </p>
             </Row>
             <Close  className="link"

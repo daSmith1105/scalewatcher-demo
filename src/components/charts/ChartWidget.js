@@ -5,6 +5,41 @@ import LineChart from './LineChart';
 import BarChart from './BarChart';
 import { Row, Col } from 'react-flexbox-grid';
 import { Close } from '@material-ui/icons';
+import { transactions, events } from '../mockData.js';
+import moment from 'moment';
+
+const data =  transactions.map( t => (
+    {
+        tId: t.id,
+        lpn: t.sLpn,
+        start: t.dStartTimestamp,
+        end: t.dEndTimestamp,
+        complete: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? true : false,
+        duration: t.dStartTimestamp.length > 0 && t.dEndTimestamp.length > 0 ? moment(t.dEndTimestamp).diff(moment(t.dStartTimestamp), 'minutes' )  : null,
+        events:  events.filter( ev => ev.bTransId === t.id ).map( (ev) => (
+            {
+                eId: ev.id,
+                tId: ev.bTransId,
+                location: ev.sLocation,
+                type: ev.sEventType,
+                data: ev.sData,
+                timestamp: ev.dTimestamp,
+                isStart: ev.dTimestamp === t.dStartTimestamp,
+                isEnd: ev.dTimestamp === t.dEndTimestamp,
+                eHour: parseInt(moment(ev.dTimestamp).format('HH')),
+                eMinute: roundDown5( parseInt(moment(ev.dTimestamp).format('mm') ))
+            }
+        ))
+            
+    }
+))
+
+// round number down to nearest increment of 5 for display correctly on timeline/in table
+function roundDown5(x)
+{
+    return Math.floor(x/5)*5;
+}
+
 class ChartWidget extends React.Component {
 
     state = {
@@ -70,27 +105,39 @@ class ChartWidget extends React.Component {
 
     return (
         <Draggable {...dragHandlers} >
-            <Col onClick={ () => this.props.setCurrentActiveChart(this.state.chartType) } style={{ zIndex: this.props.currentActiveChart === this.state.chartType ? 22 : 20, position: 'absolute', top: this.state.renderY, left: this.state.renderX,  height: 360, width: 360, backgroundColor: 'rgba(0,0,0,.8)', border: '3px solid grey', borderRadius: 10, padding: 5, boxShadow: '5px 10px 18px #888888' }}>
-                <Row center="xs" 
-                      middle="xs" >
-                    <div style={{ position: 'relative'}}>
+            <Col onClick={ () => this.props.setCurrentActiveChart(this.state.chartType) } style={{ zIndex: this.props.currentActiveChart === this.state.chartType ? 22 : 20, position: 'absolute', top: this.state.renderY, left: this.state.renderX,  height: 400, width: 400, backgroundColor: 'rgba(0,0,0,.8)', border: '3px solid grey', borderRadius: 10, padding: 5, boxShadow: '5px 10px 18px #888888' }}>
+                <Row center="xs" middle="xs" >
+                    <div style={{ position: 'relative', width: '100%' }}>
                         <p style={{ color: 'white', fontWeight: 'bold', fontSize: '2vmin' }}>
                             { this.props.type === 'line' ? 
-                                'Line Chart' :
+                                'Transaction cycle time' :
                             this.props.type === 'bar' ?
                                 'BarChart' :
                             this.props.type === 'pie' ? 
-                                'Pie Chart':
+                                'Events By Type':
                                 'Unknown Chart'
                             }
                         </p>
-
-                        { this.props.type === 'line' ? 
-                            <LineChart /> :
+                        <p style={{ color: 'white', fontWeight: 'bold', fontSize: '1.7vmin' }}>
+                            { this.props.type === 'line' ? 
+                                `${transactions.length} Transactions Total` :
                             this.props.type === 'bar' ?
-                            <BarChart /> :
+                                'BarChart' :
                             this.props.type === 'pie' ? 
-                            <PieChart /> :
+                                `${events.length} Events Total`:
+                                'Unknown Chart'
+                            }
+                        </p>
+                    </div>
+                </Row>
+                <Row center="xs" middle="xs" style={{ height: '100%', width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        { this.props.type === 'line' ? 
+                            <LineChart events={ events } data={ data } transactions={ transactions } /> :
+                            this.props.type === 'bar' ?
+                            <BarChart events={ events } data={ data } transactions={ transactions } /> :
+                            this.props.type === 'pie' ? 
+                            <PieChart events={ events } data={ data } transactions={ transactions } /> :
                             <p style={{ color: 'white' }}>Unknown Chart Type Provided</p>
                         }
                     </div>
