@@ -29,7 +29,7 @@ const TransactionBoardKeyContainer = props => {
                 <p style={{ fontSize: 12, marginLeft: 10 }}>ticket</p>                
             </Row>
             <Row middle="xs" >
-                <WarningIcon style={{ fontSize: 16, margin: 0, padding: 0, color: "#4682B4" }} />
+                <WarningIcon style={{ fontSize: 16, margin: 0, padding: 0, color: "goldenrod" }} />
                 <p style={{ fontSize: 12, marginLeft: 10 }}>alert</p>
             </Row>
         </Row>
