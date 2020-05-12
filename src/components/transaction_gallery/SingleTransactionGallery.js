@@ -143,18 +143,18 @@ class SingleTransactionGallery extends React.Component {
                                                     fontSize: '2vmin', 
                                                     padding: 2, 
                                                     borderRadius: '50vmin', 
-                                                    backgroundColor: this.state.currentIndex === i ? 'dodgerblue' : 'grey',
+                                                    backgroundColor: this.state.currentIndex === i ? '#4682B4' : 'grey',
                                                     color: 'white',
-                                                    border: this.state.currentIndex === i ? '2px solid dodgerblue' : '2px solid grey' }}
+                                                    border: this.state.currentIndex === i ? '2px solid #4682B4' : '2px solid grey' }}
                                         onClick={ () => this.setState({ currentIndex: i })}>
                                         {i + 1}
                                     </p>
                                     <p  className="cursor-pointer"
-                                        style={{ fontSize: '2vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? 'dodgerblue' : 'grey' }}>
+                                        style={{ fontSize: '2vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? '#4682B4' : 'grey' }}>
                                         {s.type}
                                     </p>
                                     <p  className="cursor-pointer"
-                                        style={{ fontSize: '1.6vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? 'dodgerblue' : 'grey' }}>
+                                        style={{ fontSize: '1.6vmin',  padding: 0, margin: 0, marginTop: 2, color: this.state.currentIndex === i ? '#4682B4' : 'grey' }}>
                                         {moment(s.timestamp).format('hh:mm:ss a')}
                                     </p>
                                 </div>
@@ -163,7 +163,7 @@ class SingleTransactionGallery extends React.Component {
                     </Row>
                 </Col>
 
-                <Col xsOffset={2} xs={8} style={{ position: 'absolute', bottom: '6vmin', left: 0, height: '.5vmin', backgroundColor: 'dodgerblue', width: '100%' }}>
+                <Col xsOffset={2} xs={8} style={{ position: 'absolute', bottom: '6vmin', left: 0, height: '.5vmin', backgroundColor: '#4682B4', width: '100%' }}>
                 </Col>
             </Col>
         )

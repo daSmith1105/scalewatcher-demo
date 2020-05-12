@@ -10,7 +10,7 @@ const TableViewHeader= props => {
 
       <Col xs={6}>
         <Row start="xs">
-          <h1 style={{ color: 'dodgerblue', padding: 0, margin: 0, textAlign: 'left', marginLeft: 20 }}>Table View</h1> 
+          <h1 style={{ color: '#4682B4', padding: 0, margin: 0, textAlign: 'left', marginLeft: 20 }}>Table View</h1> 
         </Row>
       </Col>
 

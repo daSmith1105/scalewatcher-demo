@@ -6,7 +6,7 @@ import '../App.css';
 const Header = props => {
     return (
         <Col xs={12} style={{ height: 80, width: '100%', position: 'fixed', top: 0, left: 0 }}>
-            <Row center="xs"  middle="xs" style={{ backgroundColor: 'dodgerblue', padding: 10, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+            <Row center="xs"  middle="xs" style={{ backgroundColor: '#4682B4', padding: 10, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                 <Col xs={10} mdOffset={2} md={8}>
                     <h1 style={{ fontSize: 26, margin: 0, padding: 0, color: 'white' }}>Scale Watcher Dashboard</h1>
                 </Col>
@@ -18,19 +18,19 @@ const Header = props => {
             </Row>
             <Row center="xs" middle="xs" style={{ marginTop: 10 }}>
                 <h1 className="link"
-                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'transaction' ? 'dodgerblue' : 'grey' }}
+                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'transaction' ? '#4682B4' : 'grey' }}
                     onClick={ () => props.setActiveView('transaction') }>
                     transaction board
                 </h1>
                 <h1 style={{ fontSize: 20, margin: 0, padding: 0, color: 'grey', marginRight: 10, marginLeft: 10 }}>|</h1>
                 <h1 className="link"
-                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'table' ? 'dodgerblue' : 'grey' }}
+                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'table' ? '#4682B4' : 'grey' }}
                     onClick={ () => props.setActiveView('table') }>
                     table view
                 </h1>
                 <h1 style={{ fontSize: 20, margin: 0, padding: 0, color: 'grey', marginRight: 10, marginLeft: 10 }}>|</h1>
                 <h1 className="link"
-                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'log' ? 'dodgerblue' : 'grey' }}
+                    style={{ fontSize: 18, margin: 0, padding: 0, color: props.activeView === 'log' ? '#4682B4' : 'grey' }}
                     onClick={ () => props.setActiveView('log') }>
                     log reports
                 </h1>
