@@ -14,7 +14,7 @@ const TransactionBoardHeader= props => {
       {/* heading */}
       <Col xs={6} md={6} lg={4} >
         <Row start="xs">
-          <h1 style={{ color: 'goldenrod', padding: 0, margin: 0, marginLeft: 20 }}>Transactions</h1> 
+          <h1 style={{ color: 'dodgerblue', padding: 0, margin: 0, marginLeft: 20 }}>Transactions</h1> 
         </Row>
       </Col>
     
@@ -40,8 +40,8 @@ const TransactionBoardHeader= props => {
       {/* <Col xs={7} md={6} lg={3}>
         <ButtonGroup variant="contained" 
                     aria-label="contained primary button group">
-          <Button style={{ color: 'white', fontWeight: 'bold', background: 'goldenrod', borderColor: 'goldenrod' }}>Transactions</Button>
-          <Button style={{ color: 'goldenrod', fontWeight: 'bold', background: 'transparent', borderColor: 'goldenRod' }}>Vehicles</Button>
+          <Button style={{ color: 'white', fontWeight: 'bold', background: 'dodgerblue', borderColor: 'dodgerblue' }}>Transactions</Button>
+          <Button style={{ color: 'dodgerblue', fontWeight: 'bold', background: 'transparent', borderColor: 'dodgerblue' }}>Vehicles</Button>
         </ButtonGroup>
       </Col> */}
       

@@ -28,8 +28,8 @@ button {
 
 button:hover {
   cursor: pointer;
-  background-color: goldenrod;
-  border-color: goldenrod;
+  background-color: dodgerblue;
+  border-color: dodgerblue;
   color: white;
 }
 
@@ -38,7 +38,7 @@ button:hover {
 }
 .button-like:hover {
   cursor: pointer;
-  background-color: goldenrod;
+  background-color: dodgerblue;
   color: white;
 }
 
@@ -48,7 +48,7 @@ button:hover {
 }
 
 .link:hover {
-  color: goldenrod;
+  color: dodgerblue;
   cursor: pointer;
   font-weight: bold;
 }

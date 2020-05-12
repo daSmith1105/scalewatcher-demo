@@ -39,7 +39,7 @@ class Main extends React.Component {
     } else if ( eventtype === 'ValveOpened' || eventtype ==='ValveClosed' ) {
         color = 'blue'
     } else if ( eventtype === 'NoTicket' || eventtype === 'ValveAlert' || eventtype === 'OverWeight' || eventtype === 'TareWeightContamination' ) {
-        color = 'goldenrod'
+        color = 'dodgerblue'
     } else {
         color = 'grey'
     }
